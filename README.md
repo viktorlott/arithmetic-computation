@@ -40,37 +40,31 @@ Lets define it as: $RoundDown(x) = \lceil x - 0.5 \rceil$.
 
 We can now move over to more logical operators. We begin with $True(x)$. Its codomain looks like this.
 
-$
-True(x) = 
+$True(x) = 
 \begin{cases} 
 1 & \text{if } x > 0 \\
 0 & \text{if } x \leq   0
-\end{cases}
-$
+\end{cases}$
 
 Lets define it as: $True(x) = 1 - 0^{|x|+x}$
 
 Then we have the $False(x)$ operator. Its codomain looks like this:
 
-$
-False(x) = 
+$False(x) = 
 \begin{cases} 
 0 & \text{if } x > 0 \\
 1 & \text{if } x \leq   0
-\end{cases}
-$
+\end{cases}$
 
 Lets define it as: $True(x) = 0^{|x|+x}$
 
 We can also define the $Sign(x)$ function. Its codomain looks like this:
 
-$
-Sign(x) = 
+$Sign(x) = 
 \begin{cases} 
 +1 & \text{if } x \geq   0 \\
 -1 & \text{if } x < 0 
-\end{cases}
-$
+\end{cases}$
 
 Lets define it as: $Sign(x) = (-1)^{1 - F(-x)}$
 
@@ -90,13 +84,11 @@ But now we can actually do piecewise functions with "pure" math.
 
 Lets do *Greater than*, *Lesser than* / *or equal*.
 
-$
-Between(x, a, b) = 
+$Between(x, a, b) = 
 \begin{cases} 
 x & \text{if } a \lt x \lt b \\
 0 & \text{else }
-\end{cases}
-$
+\end{cases}$
 
 ...or just $(a, b)$ using interval notation.
 
