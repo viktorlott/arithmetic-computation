@@ -28,7 +28,7 @@ $$tan^{-1}(x)=\sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1}$$
 
 $$
 cot^{-1}(x)= \begin{cases} \frac{\pi}{2} - tan^{-1}(x) & \text{if } -1 \leq x \leq 1 \\
-\frac{\pi}{2} - tan^{-1}(\frac\{1}{x}) & \text{if } x \geq 1 \\
+tan^{-1}(\frac\{1}{x}) & \text{if } x \geq 1 \\
 \pi + tan^{-1}(\frac\{1}{x}) & \text{if } x \leq -1 \end{cases} 
 $$
 
