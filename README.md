@@ -20,6 +20,7 @@ Lets define it as: $$|x|=\sqrt{x^2}$$
 Now, the Floor operator can actually be defined by the Modulo operator. It's a bit tricky, so to define it, we have to use two trigonometry functions. Took me a while to figure this out..
 
 Lets define it as: $$mod(x, y) = \frac{y\times\cot^{-1}(\cot(\frac{\pi x}{y}))}{\pi}$$
+>This function can not be found anywhere on the internet.
 
 Lets define: $$truncate(x) = mod(x, 1)$$
 
@@ -38,10 +39,15 @@ Lets define it as: $$RoundUp(x) = \lfloor x + 0.5 \rfloor$$
 Lets define it as: $$RoundDown(x) = \lceil x - 0.5 \rceil$$
 
 
+### Logical expressions
 We can now move over to more logical operators. We begin with $True(x)$. Its codomain looks like this.
 
 $$True(x) = \begin{cases} 1 & \text{if } x > 0 \\
 0 & \text{if } x \leq   0\end{cases}$$
+
+>I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**.
+>They are often defined using piece-wise functions. The main difference here is that I'm saying that 0 is part of the negative number line.
+
 
 Lets define it as: $$True(x) = 1 - 0^{|x|+x}$$
 
@@ -50,15 +56,14 @@ Then we have the $False(x)$ operator. Its codomain looks like this:
 $$False(x) = \begin{cases} 0 & \text{if } x > 0 \\
 1 & \text{if } x \leq   0\end{cases}$$
 
-Lets define it as: $$True(x) = 0^{|x|+x}$$
+Lets define it as: $$False(x) = 0^{|x|+x}$$
 
 We can also define the $Sign(x)$ function. Its codomain looks like this:
 
 $$Sign(x) = \begin{cases} +1 & \text{if } x \geq   0 \\
 -1 & \text{if } x < 0 \end{cases}$$
 
-Lets define it as: $$Sign(x) = (-1)^{1 - F(-x)}$$
-
+Lets define it as: $$Sign(x) = (-1)^{T(-x)}$$
 
 So next up is to actually define the basic $Not(x)$, $And(x, y)$, And $Or(x, y)$.
 
@@ -73,6 +78,7 @@ Lets define: $$Or(x, y) = Not(And(Not(x), Not(y)))$$
 
 But now we can actually do piecewise functions with "pure" math.
 
+
 Lets do *Greater than*, *Lesser than* / *or equal*.
 
 $$Between(x, a, b) = \begin{cases} x & \text{if } a \lt x \lt b \\ 
@@ -80,7 +86,15 @@ $$Between(x, a, b) = \begin{cases} x & \text{if } a \lt x \lt b \\
 
 ...or just $(a, b)$ using interval notation.
 
-Lets define $$Between(x, a, b)=x \times (True(x-a)-0^{|(x - b)|-(x-b)})$$
+Lets define 
+$$Between(x, a, b)=x \times 0^{|True(x-a)-True(-x-b)|}$$
+
+
+$$Between(x, a, b)=x \times (True(x-a)-0^{|(x - b)|-(x-b)})$$
+
+Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function iif we have have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
+
+$$rect(x)= \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
 
 
 ----------------------
