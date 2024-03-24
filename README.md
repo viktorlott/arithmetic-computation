@@ -10,7 +10,17 @@ So the goal with this is more to see if it's possible to define certain math ope
 > NOTE: There're certain Analytical continuations for certain functions, but that's not the point of this.
 
 
-### Basics
+$$ln(x) = 2 \times \sum_{n=0}^\infty \frac{1}{2n + 1}(\frac{x - 1}{x + 1})^{2n+1}$$
+
+$$e^{x} = \sum_{n=0}^\infty \frac{x^{n}}{n!}$$
+
+$$b^{x} = e^{x \times ln(b)}$$
+
+$$x! = \lim_{N \to \infty} N^x\prod^{N}_{k=1} \frac{k}{k + x}$$
+
+> Trig functions here...
+
+### Regular functions
 Let me give you an example. Take the Modulo operator. Its definition includes the Absolute- and the Floor operator. But how are they defined?
 
 The Absolute operator is very simple, we've seen it many times in action. It has this signature, $\sqrt{x^2}$.
@@ -42,28 +52,22 @@ Lets define it as: $$RoundDown(x) = \lceil x - 0.5 \rceil$$
 ### Logical expressions
 We can now move over to more logical operators. We begin with $True(x)$. Its codomain looks like this.
 
-$$True(x) = \begin{cases} 1 & \text{if } x > 0 \\
+$$True(x) = 1 - 0^{|x|+x} = \begin{cases} 1 & \text{if } x > 0 \\
 0 & \text{if } x \leq   0\end{cases}$$
 
 >I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**.
 >They are often defined using piece-wise functions. The main difference here is that I'm saying that 0 is part of the negative number line.
 
 
-Lets define it as: $$True(x) = 1 - 0^{|x|+x}$$
-
 Then we have the $False(x)$ operator. Its codomain looks like this:
 
-$$False(x) = \begin{cases} 0 & \text{if } x > 0 \\
+$$False(x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
 1 & \text{if } x \leq   0\end{cases}$$
-
-Lets define it as: $$False(x) = 0^{|x|+x}$$
 
 We can also define the $Sign(x)$ function. Its codomain looks like this:
 
-$$Sign(x) = \begin{cases} +1 & \text{if } x \geq   0 \\
+$$Sign(x) = (-1)^{T(-x)} = \begin{cases} +1 & \text{if } x \geq   0 \\
 -1 & \text{if } x < 0 \end{cases}$$
-
-Lets define it as: $$Sign(x) = (-1)^{T(-x)}$$
 
 So next up is to actually define the basic $Not(x)$, $And(x, y)$, And $Or(x, y)$.
 
@@ -75,22 +79,17 @@ Lets define: $$Or(x, y) = Not(And(Not(x), Not(y)))$$
 
 ... we can go on and on..
 
+### Piecewise functions
 
-But now we can actually do piecewise functions with "pure" math.
-
+But now we can actually do Piecewise functions with "pure" math.
 
 Lets do *Greater than*, *Lesser than* / *or equal*.
 
-$$Between(x, a, b) = \begin{cases} x & \text{if } a \lt x \lt b \\ 
+$$Between(x, a, b) = x \times 0^{|True(x-a)-True(-x-b)|}= x \times (True(x-a)-0^{|(x - b)|-(x-b)}) =\begin{cases} x & \text{if } a \lt x \lt b \\ 
 0 & \text{else }\end{cases}$$
 
 ...or just $(a, b)$ using interval notation.
 
-Lets define 
-$$Between(x, a, b)=x \times 0^{|True(x-a)-True(-x-b)|}$$
-
-
-$$Between(x, a, b)=x \times (True(x-a)-0^{|(x - b)|-(x-b)})$$
 
 Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function iif we have have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
 
