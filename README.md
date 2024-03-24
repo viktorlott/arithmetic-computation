@@ -10,13 +10,27 @@ So the goal with this is more to see if it's possible to define certain math ope
 > NOTE: There're certain Analytical continuations for certain functions, but that's not the point of this.
 
 
-$$ln(x) = 2 \times \sum_{n=0}^\infty \frac{1}{2n + 1}(\frac{x - 1}{x + 1})^{2n+1}$$
+$$ln(x) = 2 \times \sum_{n=0}^{\infty} \frac{1}{2n + 1}(\frac{x - 1}{x + 1})^{2n+1}$$
 
-$$e^{x} = \sum_{n=0}^\infty \frac{x^{n}}{n!}$$
+$$e^{x} = \sum_{n=0}^{\infty} \frac{x^{n}}{n!}$$
 
 $$b^{x} = e^{x \times ln(b)}$$
 
 $$x! = \lim_{N \to \infty} N^x\prod^{N}_{k=1} \frac{k}{k + x}$$
+
+$$sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{2n + 1} x^{2n + 1}$$
+
+$$cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{2n} x^{2n}$$
+
+$$\pi cot(\pi x)= \lim_{N \to \infty} \sum_{n=-N}^{N} \frac{1}{x + n}$$
+
+$$tan^{-1}(x)=\sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1}$$
+
+$$
+cot^{-1}(x)= \begin{cases} \frac{\pi}{2} - tan^{-1}(x) & \text{if } -1 \leq x \leq 1 \\
+\frac{\pi}{2} - tan^{-1}(\frac\{1}{x}) & \text{if } x \geq 1 \\
+\pi + tan^{-1}(\frac\{1}{x}) & \text{if } x \leq -1 \end{cases} 
+$$
 
 > Trig functions here...
 
