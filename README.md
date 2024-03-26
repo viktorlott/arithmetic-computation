@@ -134,7 +134,7 @@ But now we can do Piecewise functions with "pure" math.
 ....
 
 
-### Lagrangian functions
+### Special Fourier series
 
 Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function IIF we have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
 
