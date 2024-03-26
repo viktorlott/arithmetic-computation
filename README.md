@@ -91,27 +91,6 @@ Let us define: $$and(x, y) = true(x) \times true(y)$$
 
 Let us define: $$or(x, y) = not(and(not(x), not(y)))$$
 
-... we can go on and on...
-
-### Piecewise functions
-
-But now we can do Piecewise functions with "pure" math.
-
-Let's do *Greater than*, *Lesser than* / *or equal*.
-
-$$between(x, a, b) = a < x < b = 0^{|true(x-a)-true(-x-b)|}= true(x-a)-0^{|(x - b)|-(x-b)} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
-0 & \text{else }\end{cases}$$
-
-...or just $(a, b)$ using interval notation.
-
-
-Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function IIF we have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
-
-$$rect(x)= \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
-
-
-----------------------
-
 The $max(a, b)$ function can easily be defined using the previous logic operations.
 
 Let us define it as:
@@ -137,6 +116,33 @@ $$x < a = 1-0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
 Lesser than or equal:
 
 $$x \leq a = 0^{\left|a\ -\ \max\left(x,\ a\right)\right|}$$
+
+... we can go on and on...
+
+
+Let's do *Greater than*, *Lesser than* / *or equal*.
+
+$$between(x, a, b) = a < x < b = 0^{|true(x-a)-true(-x-b)|}= true(x-a)-0^{|(x - b)|-(x-b)} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
+0 & \text{else }\end{cases}$$
+
+...or just $(a, b)$ using interval notation.
+
+### Piecewise functions
+
+But now we can do Piecewise functions with "pure" math.
+
+....
+
+
+### Lagrangian functions
+
+Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function IIF we have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
+
+$$rect(x)= \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
+
+
+----------------------
+
 
 ### notes
 
