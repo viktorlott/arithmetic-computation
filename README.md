@@ -27,9 +27,9 @@ $$\pi cot(\pi x)= \lim_{N \to \infty} \sum_{n=-N}^{N} \frac{1}{x + n}$$
 $$tan^{-1}(x)=\sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1}$$
 
 $$
-cot^{-1}(x)= \begin{cases} \frac{\pi}{2} - tan^{-1}(x) & \text{if } -1 \leq x \leq 1 \\
+cot^{-1}(x) = \begin{cases} \frac{\pi}{2} - tan^{-1}(x) & \text{if } -1 \leq x \leq 1 \\
 tan^{-1}(\frac\{1}{x}) & \text{if } x \geq 1 \\
-\pi + tan^{-1}(\frac\{1}{x}) & \text{if } x \leq -1 \end{cases} 
+\pi + tan^{-1}(\frac\{1}{x}) & \text{if } x \leq -1 \end{cases}
 $$
 
 > Trig functions here...
@@ -39,88 +39,106 @@ Let me give you an example. Take the Modulo operator. Its definition includes th
 
 The Absolute operator is very simple, we've seen it many times in action. It has this signature, $\sqrt{x^2}$.
 
-Lets define it as: $$|x|=\sqrt{x^2}$$
+Let us define it as: $$|x|=\sqrt{x^2}$$
 
 Now, the Floor operator can actually be defined by the Modulo operator. It's a bit tricky, so to define it, we have to use two trigonometry functions. Took me a while to figure this out..
 
 Lets define it as: $$mod(x, y) = \frac{y\times\cot^{-1}(\cot(\frac{\pi x}{y}))}{\pi}$$
 >This function can not be found anywhere on the internet.
 
-Lets define: $$truncate(x) = mod(x, 1)$$
+Let us define: $$truncate(x) = mod(x, 1)$$
 
-So with this, we can define the Floor operator.
+So with this, we can define the $\lfloor x \rfloor$ operator.
 
 Lets define it as: $$\lfloor x \rfloor = x - truncate(x)$$
 
-We can also define the Ceil operator now.
+We can also define the $\lceil x \rceil$ operator now.
 
 Lets define it as: $$\lceil x \rceil = x + truncate(-x)$$
 
-We can also define $$Round(x)$, both up and down.
+We can also define $round(x)$, both up and down.
 
-Lets define it as: $$RoundUp(x) = \lfloor x + 0.5 \rfloor$$
+Let us define it as: $$roundUp(x) = \lfloor x + 0.5 \rfloor$$
 
-Lets define it as: $$RoundDown(x) = \lceil x - 0.5 \rceil$$
+Let us define it as: $$roundDown(x) = \lceil x - 0.5 \rceil$$
 
 
 ### Logical expressions
-We can now move over to more logical operators. We begin with $True(x)$. Its codomain looks like this.
+We can now move over to more logical operators. We begin with $true(x)$. Its codomain looks like this.
 
-$$True(x) = 1 - 0^{|x|+x} = \begin{cases} 1 & \text{if } x > 0 \\
+$$true(x) = 1 - 0^{|x|+x} = \begin{cases} 1 & \text{if } x > 0 \\
 0 & \text{if } x \leq   0\end{cases}$$
 
 >I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**.
 >They are often defined using piece-wise functions. The main difference here is that I'm saying that 0 is part of the negative number line.
 
 
-Then we have the $False(x)$ operator. Its codomain looks like this:
+Then we have the $false(x)$ operator. Its codomain looks like this:
 
-$$False(x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
+$$false(x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
 1 & \text{if } x \leq   0\end{cases}$$
 
-We can also define the $Sign(x)$ function. Its codomain looks like this:
+We can also define the $sign(x)$ function. Its codomain looks like this:
 
-$$Sign(x) = (-1)^{T(-x)} = \begin{cases} +1 & \text{if } x \geq   0 \\
+$$sign(x) = (-1)^{T(-x)} = \begin{cases} +1 & \text{if } x \geq   0 \\
 -1 & \text{if } x < 0 \end{cases}$$
 
-So next up is to actually define the basic $Not(x)$, $And(x, y)$, And $Or(x, y)$.
+So next up is to define the basic $not(x)$, $and(x, y)$, and $or(x, y)$.
 
-Lets define: $$Not(x) = 1 - True(x)$$
+Let us define: $$not(x) = 1 - true(x)$$
 
-Lets define: $$And(x, y) = True(x) \times True(y)$$
+Let us define: $$and(x, y) = true(x) \times true(y)$$
 
-Lets define: $$Or(x, y) = Not(And(Not(x), Not(y)))$$
+Let us define: $$or(x, y) = not(and(not(x), not(y)))$$
 
-... we can go on and on..
+... we can go on and on...
 
 ### Piecewise functions
 
-But now we can actually do Piecewise functions with "pure" math.
+But now we can do Piecewise functions with "pure" math.
 
-Lets do *Greater than*, *Lesser than* / *or equal*.
+Let's do *Greater than*, *Lesser than* / *or equal*.
 
-$$Between(x, a, b) = x \times 0^{|True(x-a)-True(-x-b)|}= x \times (True(x-a)-0^{|(x - b)|-(x-b)}) =\begin{cases} x & \text{if } a \lt x \lt b \\ 
+$$between(x, a, b) = a < x < b = 0^{|true(x-a)-true(-x-b)|}= true(x-a)-0^{|(x - b)|-(x-b)} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
 0 & \text{else }\end{cases}$$
 
 ...or just $(a, b)$ using interval notation.
 
 
-Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function iif we have have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
+Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function IIF we have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
 
 $$rect(x)= \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
 
 
 ----------------------
 
-TODO:
-Max(x, y), Min(x, y), Greater[eq](x, y), Lesser[eq](x, y)...
-e.g. MycoolFunction(x)*True(x) + ElseCallthis(x)*False(x)
+The $max(a, b)$ function can easily be defined using the previous logic operations.
 
+Let us define it as:
 
+$$max(a, b) = a\cdot true\left(a\ -\ b\right)\ +\ b\cdot\left(1\ -\ true\left(a\ -\ b\right)\right)$$
 
+and the $min(a, b)$ function can then just switch the arguments around.
 
+$$min(a, b) = b\cdot true\left(a\ -\ b\right)\ +\ a\cdot\left(1\ -\ true\left(a\ -\ b\right)\right)$$
 
-### Notes
+Greater than:
+
+$$x \gt a = 1-0^{\left|a-\ \max\left(x,\ a\right)\right|}$$
+
+Greater than or equal:
+
+$$x \geq a = 0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
+
+Lesser than:
+
+$$x < a = 1-0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
+
+Lesser than or equal:
+
+$$x \leq a = 0^{\left|a\ -\ \max\left(x,\ a\right)\right|}$$
+
+### notes
 
 TODO: Expand these subject
 1. Numerical stability
