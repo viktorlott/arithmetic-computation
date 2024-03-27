@@ -18,9 +18,9 @@ $$b^{x} = e^{x \times ln(b)}$$
 
 $$x! = \lim_{N \to \infty} N^x\prod^{N}_{k=1} \frac{k}{k + x}$$
 
-$$sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{2n + 1} x^{2n + 1}$$
+$$sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{2n + 1} x^{2n + 1} = \frac{x}{(\frac{x}{\pi})!(-\frac{x}{\pi})!}$$
 
-$$cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{2n} x^{2n}$$
+$$cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{2n} x^{2n} = sin(x + \frac{\pi}{2})$$
 
 $$\pi cot(\pi x)= \lim_{N \to \infty} \sum_{n=-N}^{N} \frac{1}{x + n}$$
 
@@ -87,9 +87,19 @@ So next up is to define the basic $not(x)$, $and(x, y)$, and $or(x, y)$.
 
 Let us define: $$not(x) = 1 - true(x)$$
 
+or
+
+$$not(x) = -x$$
+
 Let us define: $$and(x, y) = true(x) \times true(y)$$
 
+or
+
+$$and(x, y) = x \times y$$
+
 Let us define: $$or(x, y) = not(and(not(x), not(y)))$$
+
+Using the latter, 
 
 The $max(a, b)$ function can easily be defined using the previous logic operations.
 
