@@ -181,7 +181,7 @@ $$ = \lbrack\ a,\ b\ \rparen (x) = gte(x, a) \times lt(x, a) \times x$$
 
 We can do a binary counting function:
 
-$$fromBinaryToDecimal(x)=\sum_{n=0}^{length(x)} true(digitAt(x, n + 1)) \cdot 2^{n}$$
+$$fromBinaryToDecimal(x)=\sum_{n=0}^{length(x)} on(digitAt(x, n + 1)) \cdot 2^{n}$$
 
 $$fromBinaryToDecimal(1010101)=85$$
 
