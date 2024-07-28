@@ -95,72 +95,89 @@ $$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor
 
 ### Logical expressions
 
-We can now move over to more logical operations. Lets start by talking about $0^{x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. This reminds me of a transistor. 
+We can now move over to more logical operations. Lets start by talking about $0^{x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. It's important to note that $0^{0}$ is actually indeterminate, and has different defitions depending on the context. In combinatorics, it is defined as being equal to one, but using limits, one could argue for it being equal to either 1 or 0.
 
 Now to really formalize this expression such that it's defined for all *x* (making it sound), we can actually define it as: 
 
-$$false(x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
+$$\text{\textit{off}}\ (x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
 1 & \text{if } x \leq   0\end{cases}$$
 
-$$0^{|x|}0^{x}=0^{x}0^{|x|}=0^{|x|\ +\ x}$$
+$$0^{|x|}0^{x}=0^{x}0^{|x|}=0^{|x|\ +\ x} \ \ \text{Doesn't work}$$
 
-Next up is $true(x)$, and it is basically just a negation.
+$$(|x| - x)^{|x|}(|x| - x)^{x}=(|x| - x)^{x}(|x| - x)^{|x|}=(|x| - x)^{|x|\ +\ x}=0^{|x|\ +\ x} \ \ \text{Works}$$
 
-$$true(x) = 1 - false(x) = \begin{cases} 1 & \text{if } x > 0 \\
+>I also want to share this expression $(|x|\ -\ x)^{|x|\ +\ x}$, which has the same properties as $0^{|x|\ +\ x}$.
+
+We can also define it as this:
+
+$$ \text{\textit{off}}\ (-x) = 0.5 + \frac{|x - mod(x, 1) + 0.5|}{2x - 2 \times mod(x, 1) + 1}$$
+
+>This would actually require $(|x|\ -\ x)^{|x|\ +\ x}$ because *mod* (arccot to be specific) uses piecewise notation.
+
+Next up is $on(x)$, and it is basically just a negation.
+
+$$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
 0 & \text{if } x \leq   0\end{cases}$$
 
->I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**.
+>I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**, but they define it differently.
 >They are often defined using piece-wise functions. The main difference here is that I'm saying that 0 is part of the negative number line.
 
 We can also define the $sign(x)$ function. Its codomain looks like this:
 
-$$sign(x) = (-1)^{true(-x)} = \begin{cases} +1 & \text{if } x \geq   0 \\
+$$sign(x) = (-1)^{on(-x)} = \begin{cases} +1 & \text{if } x \geq   0 \\
 -1 & \text{if } x < 0 \end{cases}$$
 
 So next up is to define the basic $not(x)$, $and(x, y)$, and $or(x, y)$.
 
 Let us define: 
 
-$$not(x) = 1 - true(x)$$
+$$not(x) = 1 - on(x) = on(\text{\textit{off}}\ (x))$$
 
-$$and(x, y) = true(x) \times true(y) = true(x \times y)$$
+$$and(x, y) = on(x) \times on(y)$$
 
 $$or(x, y) = not(and(not(x), not(y)))$$
+
+$$xor(x, y) = or(and(not(x), y), and(x, not(y)))$$
 
 The $max(a, b)$ function can easily be defined using the previous logic operations.
 
 Let us define it as:
 
-$$max(a, b) = a\cdot true\left(a\ -\ b\right)\ +\ b\cdot\left(1\ -\ true\left(a\ -\ b\right)\right)$$
+$$max(a, b) = a\cdot on\left(a\ -\ b\right)\ +\ b\cdot\left(1\ -\ on\left(a\ -\ b\right)\right)$$
 
 and the $min(a, b)$ function can then just switch the arguments around.
 
-$$min(a, b) = b\cdot true\left(a\ -\ b\right)\ +\ a\cdot\left(1\ -\ true\left(a\ -\ b\right)\right)$$
+$$min(a, b) = b\cdot on\left(a\ -\ b\right)\ +\ a\cdot\left(1\ -\ on\left(a\ -\ b\right)\right)$$
 
 Let's do *Greater than*, *Lesser than* / *or equal*.
 
 Greater than:
 
-$$x \gt a = 1-0^{\left|a\ -\ \max\left(x,\ a\right)\right|}$$
+$$x \gt a = gt(x, a) = 1-0^{\left|a\ -\ \max\left(x,\ a\right)\right|}$$
 
 Greater than or equal:
 
-$$x \geq a = 0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
+$$x \geq a = gte(x, a) = 0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
 
 Lesser than:
 
-$$x < a = 1-0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
+$$x < a = lt(x, a) = 1-0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
 
 Lesser than or equal:
 
-$$x \leq a = 0^{\left|a\ -\ \max\left(x,\ a\right)\right|}$$
+$$x \leq a = lte(x, a) = 0^{\left|a\ -\ \max\left(x,\ a\right)\right|}$$
 
 ... we can go on and on...
 
-$$between(x, a, b) = a < x < b = 0^{|true(x - a) - true(-x - b)|} = true(x - a) - 0^{|(x - b)| - (x-b)} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
+Open interval:
+
+$$between(x, a, b) = a < x < b = 0^{|on(x - a) - on(-x - b)|} = on(x - a) - 0^{|(x - b)| - (x-b)} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
 0 & \text{else }\end{cases}$$
 
-...or just $(a, b)$ using interval notation.
+Half-open interval:
+
+$$ = \lbrack\ a,\ b\ \rparen (x) = gte(x, a) \times lt(x, a) \times x$$
+
 
 We can do a binary counting function:
 
@@ -175,7 +192,6 @@ But now we can do Piecewise functions with "pure" math.
 $$f(x) = between(x, 0, 4) \times x^{2} + between(x, 3, 6) \times x^{3}$$
 
 ....
-
 
 ### Special Fourier series
 
