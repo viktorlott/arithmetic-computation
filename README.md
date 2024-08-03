@@ -24,12 +24,12 @@ $$cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{(2n)!} x^{2n} = sin(x + \frac{\pi
 
 $$\pi cot(\pi x)= \lim_{N \to \infty} \sum_{n=-N}^{N} \frac{1}{x + n}$$
 
-$$tan^{-1}(x)=\sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1}$$
+$$tan^{-1}(x)=\sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1} = \int_{0}^{n}\frac{1}{1\ +\ x^{2}}dx$$
 
 $$
 cot^{-1}(x) = \begin{cases} \frac{\pi}{2} - tan^{-1}(x) & \text{if } -1 \leq x \leq 1 \\
 tan^{-1}(\frac\{1}{x}) & \text{if } x \geq 1 \\
-\pi + tan^{-1}(\frac\{1}{x}) & \text{if } x \leq -1 \end{cases}
+\pi + tan^{-1}(\frac\{1}{x}) & \text{if } x \leq -1 \end{cases} = \frac{\pi}{2} - \int_{0}^{n}\frac{1}{1\ +\ x^{2}}dx 
 $$
 
 
@@ -83,7 +83,7 @@ We define the $length(x)$ operator, which gives us the integer length of a numbe
 
 Lets define it as: 
 
-$$length(x) = \lfloor \log_{10}(x) \rfloor + 1$$
+$$length(x) = \lfloor \log_{10}(|x|) \rfloor + 1$$
 > Note that we need to specify a MAX fraction size if we want to be able to count the number length of fractions/decimals.
 
 We can define the $digitAt(x, pos) = number_{position}$, which gives us the integer number at position.
@@ -91,6 +91,8 @@ We can define the $digitAt(x, pos) = number_{position}$, which gives us the inte
 Lets define it as: 
 
 $$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor \cdot 10^{pos} \rfloor}{10^{pos - 1}} \rfloor = \lfloor \frac{x}{10^{pos - 1}} \rfloor \bmod 10$$
+
+> Important, I've seen that $\lfloor \frac{x}{10^{pos - 1}} \rfloor \bmod 10$ doesn't give accurate digits when working with contiguous bit sequences, so I would use my version instead.
 
 
 ### Logical expressions
@@ -184,6 +186,22 @@ We can do a binary counting function:
 $$fromBinaryToDecimal(x)=\sum_{n=0}^{length(x)} on(digitAt(x, n + 1)) \cdot 2^{n}$$
 
 $$fromBinaryToDecimal(1010101)=85$$
+
+We can do a binary16 to decimal:
+
+$$Z = 16$$
+
+$$U = 0100001100000000$$
+
+$$SIGN = \left(-1\right)^{digitAt\left(U,\ Z\right)}$$
+
+$$EXPONENT = \sum_{n=0}^{4}digitAt\left(U,\ 11\ +\ n\right)\cdot2^{n}$$
+
+$$MANTISSA = \sum_{n=0}^{9}digitAt\left(U,\ 10\ -\ n\right)\cdot2^{-\left(n\ +\ 1\right)}$$
+
+$$SIGN\cdot2^{EXPONENT-15}\cdot\left(1\ +\ MANTISSA\right) = 3.5$$
+
+> TODO: Create a function for this.
 
 ### Piecewise functions
 
