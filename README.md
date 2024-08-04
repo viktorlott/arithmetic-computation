@@ -243,12 +243,11 @@ $$N^x\prod^{\infty}_{k=1} \frac{k}{k + x}$$
 
 Explicit formula
 
-$$ B_{n} = \sum^{n}_{k=0} \sum^{k}_{j=0} (-1)^j \binom{k}{j} \frac{j^n}{k + 1}$$
+$$B_{n} = \sum^{n}_{k=0}{\sum^{k}_{j=0}{(-1)^j \binom{k}{j} \frac{j^n}{k + 1}}}$$
 
 Recursive Formula
 
 $$ B_{n} = -\sum^{n - 1}_{k=0} \binom{n}{k} \frac{B_k}{n - k + 1} $$
-
 
 > I want to expand on these later and use them to formulate alternative functions to *modulo* operation, etc.
 
