@@ -202,6 +202,7 @@ $$ precision(x, p) = on(x + p) \cdot off(x - (1 - p)) $$
 $$floor(x) = \sum_{k=-\infty}^{\infty}k\ \cdot\ precision\left(x-k, 0.001\right)$$
 
 $$w(x) = 0^{|x| - x}$$
+
 $$floor(x) = \sum_{k=-\infty}^{\infty}k(w(x) - w(x - 1))$$
 
 ### Piecewise functions
