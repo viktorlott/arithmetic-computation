@@ -91,7 +91,7 @@ $$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor
 
 ### Boolean Functions and Logical Operations
 
-We can now move over to more logical operations. Lets start by talking about $0^{x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. It's important to note that $0^{0}$ is actually indeterminate, and has different defitions depending on the context. In combinatorics, it is defined as being equal to one, but using limits, one could argue for it being equal to either 1 or 0.
+We can now move over to more logical operations. Lets start by talking about $0^{x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. It's important to note that $0^{0}$ is actually indeterminate, and has different definitions depending on the context. In combinatorics, it is defined as being equal to one, but using limits, one could argue for it being equal to either 1 or 0.
 
 Now to really formalize this expression such that it's defined for all *x* (making it sound), we can actually define it as: 
 
@@ -245,15 +245,18 @@ $$ B_{n} = \sum^{n}_{k=0} \sum^{k}_{j=0} (-1)^j \binom{k}{j} \frac{j^n}{k + 1}$$
 
 Recursive Formula
 
-$$ B_{n} = -\sum^{n - 1}_{k=0} \binom{n}{k} \frac{B_k}{n - k + 1}$$
+$$ B_{n} = -\sum^{n - 1}_{k=0} \binom{n}{k} \frac{B_k}{n - k + 1} $$
+
 
 > I want to expand on these later and use them to formulate alternative functions to *modulo* operation, etc.
 
 
 --------------
+
 $$
-{\displaystyle {\begin{aligned}B_{m}^{+}&=-{\frac {1}{m+1}}\sum _{k=0}^{m-1}{\binom {m+1}{k}}B_{k}^{+}\end{aligned}}}
+{\begin{aligned}B_{m}^{+}&=-{\frac {1}{m+1}}\sum _{k=0}^{m-1}{\binom {m+1}{k}}B_{k}^{+}\end{aligned}}
 $$
+
 etc..
 
 
