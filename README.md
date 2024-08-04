@@ -204,7 +204,16 @@ $$f(x) = between(x, 0, 4) \times x^{2} + between(x, 3, 6) \times x^{3}$$
 
 Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function IIF we have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
 
-$$rect(x)= \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
+$$rect(x) = \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
+
+$$rect(x) = on(x + 0.5) \cdot off(x - 0.5)$$
+
+$$round(x) = \sum_{k=-\infin}^{\infin}k\ \cdot\ rect\left(x-k\right)$$
+
+$$ precision(x, p) = on(x + p) \cdot off(x - (1 - p)) $$
+> So I have found a precision function that can act as .
+
+$$floor(x) = \sum_{k=-\infin}^{\infin}k\ \cdot\ precision\left(x-k, 0.001\right)$$
 
 ----------------------
 
@@ -248,6 +257,7 @@ $$B_{n} = \sum^{n}_{k=0}{\sum^{k}_{j=0}{(-1)^j \binom{k}{j} \frac{j^n}{k + 1}}}$
 Recursive Formula
 
 $$ B_{n} = -\sum^{n - 1}_{k=0} \binom{n}{k} \frac{B_k}{n - k + 1} $$
+
 
 > I want to expand on these later and use them to formulate alternative functions to *modulo* operation, etc.
 
