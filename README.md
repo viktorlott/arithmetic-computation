@@ -1,4 +1,4 @@
-# From arithmetics to boolean algebra
+# Arithmetics ↔ Boolean algebra
 
 The goal with this project is to see if it's possible to define math operations with **Arithmetic operations**, **Algebra rules**, **Series and Sequences**. We often use certain math functions without knowing how they can be derived in the first place.
 
@@ -9,6 +9,7 @@ Most of these operations and functions work because of infinite series.
 So to make this computable we should define a maximum number length so that we know how to specify the series so that they correctly converges. 
 
 For periodic functions we also would use range reduction. 
+> Ough.. We cannot use range reduction because $\operatorname{reduce}\left(x\right)=x\ -\ 2\pi\cdot\operatorname{floor}\left(\frac{x}{2\pi}\right), \frac{\operatorname{arccot}\left(\cot\left(r\left(x\pi\right)\right)\right)}{\pi}$ are circular defined.
 
 *The base formulas are defined at the bottom*.
 
@@ -26,7 +27,7 @@ $$|x|=\sqrt{x^2}$$
 
 > Note that if we have a complex number $|z|$ would be interpreted as $\sqrt{a^2 + b^2}$. But here we say it's $\sqrt{x^2}$, which then would mean that $\sqrt{(-(real + imaginary))^2} = real + imaginary$.
 
-The *mod/floor/ceil/fraction* functions are always based on eachother, which makes it a little frustrating to define it using our method. But after playing around with trigonometric functions, I've managed to find out that we only need to define the *modulo* operation, and the rest can be derived from it. Took me a while to figure this out..
+The *mod/floor/ceil/fraction* functions are always based on eachother, which makes it a little frustrating to define them using our method. But after playing around with trigonometric functions, I've managed to find out that we only need to define the *modulo* operation, and the rest can be derived from it. Took me a while to figure this out..
 
 Lets define it as: 
 
@@ -100,9 +101,9 @@ $$\text{\textit{off}}\ (x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
 
 $$0^{|x|}0^{x}=0^{x}0^{|x|}=0^{|x|\ +\ x} \ \ \text{Doesn't work}$$
 
+
 $$(|x| - x)^{|x|}(|x| - x)^{x}=(|x| - x)^{x}(|x| - x)^{|x|}=(|x| - x)^{|x|\ +\ x}=0^{|x|\ +\ x} \ \ \text{Works}$$
 
->I also want to share this expression $(|x|\ -\ x)^{|x|\ +\ x}$, which has the same properties as $0^{|x|\ +\ x}$.
 
 We can also define it as this:
 
@@ -116,12 +117,13 @@ $$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
 0 & \text{if } x \leq   0\end{cases}$$
 
 >I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**, but they define it differently.
->They are often defined using piece-wise functions. The main difference here is that I'm saying that 0 is part of the negative number line.
+>They are often defined using piecewise notation. The main difference here is that I'm saying that 0 is part of the negative number line and that I have an explicit definition of it.
 
 We can also define the $sign(x)$ function. Its codomain looks like this:
 
 $$sign(x) = (-1)^{on(-x)} = \begin{cases} +1 & \text{if } x \geq   0 \\
 -1 & \text{if } x < 0 \end{cases}$$
+> Usually there is a third case here for zero, but I interpret that as being positive instead of just zero.
 
 So next up is to define the basic $not(x)$, $and(x, y)$, and $or(x, y)$.
 
@@ -222,7 +224,7 @@ $$sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{(2n + 1)!} x^{2n + 1} = \frac{x}{
 
 $$cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{(2n)!} x^{2n} = sin(x + \frac{\pi}{2})$$
 
-$$\pi cot(\pi x)= \lim_{N \to \infty} \sum_{n=-N}^{N} \frac{1}{x + n}$$
+$$\pi cot(\pi x)= \lim_{N \to \infty} \sum_{n=-N}^{N} \frac{1}{x + n} = \pi\frac{\sin\left(x\pi\ -\frac{\pi}{2}\right)}{\cos\left(x\pi+\frac{\pi}{2}\right)}$$
 
 $$tan^{-1}(x)=\sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1} = \int_{0}^{n}\frac{1}{1\ +\ x^{2}}dx$$
 
