@@ -1,10 +1,8 @@
 # From arithmetics to boolean algebra
 
-So the goal with this is more to see if it's possible to define math operations with **Arithmetic operations**, **Algebra rules**, **Series and Sequences**. 
+The goal with this project is to see if it's possible to define math operations with **Arithmetic operations**, **Algebra rules**, **Series and Sequences**. We often use certain math functions without knowing how they can be derived in the first place.
 
-> I could not find any information about this subject, anywhere. 
-> So much of this "seems" to not have been explored in this nature. There is obviously boolean algebra, but it's formalised with different axioms.
-
+> I could not find any unified information on this topic anywhere. So much of this "seems" to not have been explored this way. There might be literature about this in *Number theory*, *Discrete Mathematics*, *Combinatorics* or *Theoretical Computer Science*, but I haven't found anything directly.
 
 ### Quick notes
 Most of these operations and functions work because of infinite series.
@@ -17,7 +15,7 @@ For periodic functions we also would use range reduction.
 #### Irreducibility
 When starting to formalise these expressions you sometimes discover cases where some expressions cannot be simplified (reduced) anymore, because then they'd lose their unique property. So those expressions often get their own math notation.
 
-#### Regular functions
+### Fundamental Math Functions
 Let me give you an example. Take the Modulo function. Its definition includes the Absolute- and the Floor function. But how are they defined?
 
 The Absolute function is very simple, we've seen it many times in action. It has this signature, $\sqrt{x^2}$.
@@ -91,7 +89,7 @@ $$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor
 
 
 
-### Logical expressions
+### Boolean Functions and Logical Operations
 
 We can now move over to more logical operations. Lets start by talking about $0^{x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. It's important to note that $0^{0}$ is actually indeterminate, and has different defitions depending on the context. In combinatorics, it is defined as being equal to one, but using limits, one could argue for it being equal to either 1 or 0.
 
@@ -174,7 +172,7 @@ $$between(x, a, b) = a < x < b = 0^{|on(x - a) - on(-x - b)|} = on(x - a) - 0^{|
 
 Half-open interval:
 
-$$ = \lbrack\ a,\ b\ \rparen (x) = gte(x, a) \times lt(x, a) \times x$$
+$$ = \lbrack\ a,\ b\ \rparen (x) = gte(x, a) \times lt(x, b) \times x$$
 
 
 We can do a binary counting function:
@@ -238,6 +236,24 @@ $$\int^{\infty}_{0} t^{x-1}e^{-t}dt$$
 
 $$N^x\prod^{\infty}_{k=1} \frac{k}{k + x}$$
 
+
+### Bernoulli number
+
+Explicit formula
+
+$$ B_{n} = \sum^{n}_{k=0} \sum^{k}_{j=0} (-1)^j \binom{k}{j} \frac{j^n}{k + 1}$$
+
+Recursive Formula
+
+$$ B_{n} = -\sum^{n - 1}_{k=0} \binom{n}{k} \frac{B_k}{n - k + 1}$$
+
+> I want to expand on these later and use them to formulate alternative functions to *modulo* operation, etc.
+
+
+--------------
+$$
+{\displaystyle {\begin{aligned}B_{m}^{+}&=-{\frac {1}{m+1}}\sum _{k=0}^{m-1}{\binom {m+1}{k}}B_{k}^{+}\end{aligned}}}
+$$
 etc..
 
 
