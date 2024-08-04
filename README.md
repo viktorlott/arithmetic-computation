@@ -194,12 +194,12 @@ $$fromBinary16ToDecimal(0100001100000000) = 3.5$$
 
 $$rect(x) = on(x + 0.5) \cdot off(x - 0.5)$$
 
-$$round(x) = \sum_{k=-\infin}^{\infin}k\ \cdot\ rect\left(x-k\right)$$
+$$round(x) = \sum_{k=-\infty}^{\infty}k\ \cdot\ rect\left(x-k\right)$$
 
 $$ precision(x, p) = on(x + p) \cdot off(x - (1 - p)) $$
 > So I have found a precision function that can act as .
 
-$$floor(x) = \sum_{k=-\infin}^{\infin}k\ \cdot\ precision\left(x-k, 0.001\right)$$
+$$floor(x) = \sum_{k=-\infty}^{\infty}k\ \cdot\ precision\left(x-k, 0.001\right)$$
 
 ### Piecewise functions
 
