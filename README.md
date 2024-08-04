@@ -121,7 +121,7 @@ $$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
 
 We can also define the $sign(x)$ function. Its codomain looks like this:
 
-$$sign(x) = (-1)^{on(-x)} = \begin{cases} +1 & \text{if } x \geq   0 \\
+$$sign(x) = (-1)^{on(-x)} = \frac{x}{|x|} = \begin{cases} +1 & \text{if } x \geq   0 \\
 -1 & \text{if } x < 0 \end{cases}$$
 > Usually there is a third case here for zero, but I interpret that as being positive instead of just zero.
 
@@ -192,6 +192,15 @@ $$fromBinary16ToDecimal(0100001100000000) = 3.5$$
 > This is just a proof of concept for turning a binary sequence number only containing 1 and 0 into a decimal number.
 
 
+$$rect(x) = on(x + 0.5) \cdot off(x - 0.5)$$
+
+$$round(x) = \sum_{k=-\infin}^{\infin}k\ \cdot\ rect\left(x-k\right)$$
+
+$$ precision(x, p) = on(x + p) \cdot off(x - (1 - p)) $$
+> So I have found a precision function that can act as .
+
+$$floor(x) = \sum_{k=-\infin}^{\infin}k\ \cdot\ precision\left(x-k, 0.001\right)$$
+
 ### Piecewise functions
 
 But now we can do Piecewise functions with "pure" math.
@@ -206,14 +215,7 @@ Rectangular function can be defined using the logical operations above. But it's
 
 $$rect(x) = \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
 
-$$rect(x) = on(x + 0.5) \cdot off(x - 0.5)$$
 
-$$round(x) = \sum_{k=-\infin}^{\infin}k\ \cdot\ rect\left(x-k\right)$$
-
-$$ precision(x, p) = on(x + p) \cdot off(x - (1 - p)) $$
-> So I have found a precision function that can act as .
-
-$$floor(x) = \sum_{k=-\infin}^{\infin}k\ \cdot\ precision\left(x-k, 0.001\right)$$
 
 ----------------------
 
