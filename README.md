@@ -9,7 +9,7 @@ Most of these operations and functions work because of infinite series.
 So to make this computable we should define a maximum number length so that we know how to specify the series so that they correctly converges. 
 
 For periodic functions we also would use range reduction. 
-> Ough.. We cannot use range reduction because $reduce\left(x\right)=x\ -\ 2\pi\cdot floor\left(\frac{x}{2\pi}\right), \frac{arccot\left(\cot\left(r\left(x\pi\right)\right)\right)}{\pi}$ are circular defined.
+> Ough.. We cannot use range reduction because $\operatorname{reduce}\left(x\right)=x\ -\ 2\pi\cdot\lfloor\frac{x}{2\pi}\rfloor, \frac{\operatorname{arccot}\left(\cot\left(r\left(x\pi\right)\right)\right)}{\pi}$ are circular defined.
 
 *The base formulas are defined at the bottom*.
 
