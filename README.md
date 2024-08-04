@@ -36,7 +36,7 @@ $$mod(x, y) = \frac{y\times\cot^{-1}(\cot(\frac{\pi x}{y}))}{\pi}$$
 
 Let us define: 
 
-$$ \{x\} = frac(x) = mod(x, 1)$$
+$$ \lbrace x \rbrace = frac(x) = mod(x, 1)$$
 
 > This will give us the faction part.
 
@@ -49,13 +49,13 @@ So with this, we can define the $\lfloor x \rfloor$ function.
 
 Lets define it as: 
 
-$$\lfloor x \rfloor = floor(x) = x - \{x\}$$
+$$\lfloor x \rfloor = floor(x) = x - \lbrace x \rbrace$$
 
 We can also define the $\lceil x \rceil$ function now.
 
 Lets define it as: 
 
-$$\lceil x \rceil = ceil(x) = x +  \{-x\}$$
+$$\lceil x \rceil = ceil(x) = x +  \lbrace -x \rbrace$$
 
 We can also define $round(x)$, both up and down.
 
