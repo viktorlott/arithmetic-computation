@@ -1,73 +1,62 @@
-# Symbolic math
+# From arithmetics to boolean algebra
 
-So the goal with this is more to see if it's possible to define certain math operations with just using **Arithmetic operations**, **Algebra rules**, **Series and Sequences**.
-
+So the goal with this is more to see if it's possible to define math operations with **Arithmetic operations**, **Algebra rules**, **Series and Sequences**. 
 
 > I could not find any information about this subject, anywhere. 
 > So much of this "seems" to not have been explored in this nature. There is obviously boolean algebra, but it's formalised with different axioms.
 
 
-> NOTE: There're certain Analytical continuations for certain functions, but that's not the point of this.
-
-
-$$ln(x) = 2 \times \sum_{n=0}^{\infty} \frac{1}{2n + 1}(\frac{x - 1}{x + 1})^{2n+1}$$
-
-$$e^{x} = \sum_{n=0}^{\infty} \frac{x^{n}}{n!}$$
-
-$$b^{x} = e^{x \times ln(b)}$$
-
-$$x! = \lim_{N \to \infty} N^x\prod^{N}_{k=1} \frac{k}{k + x}$$
-
-$$sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{(2n + 1)!} x^{2n + 1} = \frac{x}{(\frac{x}{\pi})!(-\frac{x}{\pi})!}$$
-
-$$cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{(2n)!} x^{2n} = sin(x + \frac{\pi}{2})$$
-
-$$\pi cot(\pi x)= \lim_{N \to \infty} \sum_{n=-N}^{N} \frac{1}{x + n}$$
-
-$$tan^{-1}(x)=\sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1} = \int_{0}^{n}\frac{1}{1\ +\ x^{2}}dx$$
-
-$$
-cot^{-1}(x) = \begin{cases} \frac{\pi}{2} - tan^{-1}(x) & \text{if } -1 \leq x \leq 1 \\
-tan^{-1}(\frac\{1}{x}) & \text{if } x \geq 1 \\
-\pi + tan^{-1}(\frac\{1}{x}) & \text{if } x \leq -1 \end{cases} = \frac{\pi}{2} - \int_{0}^{n}\frac{1}{1\ +\ x^{2}}dx 
-$$
-
-
 ### Quick notes
 Most of these operations and functions work because of infinite series.
-So to make this computable we should define a maximum number length so that we know how to specify the series so that they correctly converges with a finite number. Some of these operations.
+So to make this computable we should define a maximum number length so that we know how to specify the series so that they correctly converges. 
 
-### Regular functions
-Let me give you an example. Take the Modulo operator. Its definition includes the Absolute- and the Floor operator. But how are they defined?
+For periodic functions we also would use range reduction. 
 
-The Absolute operator is very simple, we've seen it many times in action. It has this signature, $\sqrt{x^2}$.
+*The base formulas are defined at the bottom*.
+
+#### Irreducibility
+When starting to formalise these expressions you sometimes discover cases where some expressions cannot be simplified (reduced) anymore, because then they'd lose their unique property. So those expressions often get their own math notation.
+
+#### Regular functions
+Let me give you an example. Take the Modulo function. Its definition includes the Absolute- and the Floor function. But how are they defined?
+
+The Absolute function is very simple, we've seen it many times in action. It has this signature, $\sqrt{x^2}$.
 
 Let us define it as: 
 
 $$|x|=\sqrt{x^2}$$
 
-Now, the Floor operator can actually be defined by the Modulo operator. It's a bit tricky, so to define it, we have to use two trigonometry functions. Took me a while to figure this out..
+> Note that if we have a complex number $|z|$ would be interpreted as $\sqrt{a^2 + b^2}$. But here we say it's $\sqrt{x^2}$, which then would mean that $\sqrt{(-(real + imaginary))^2} = real + imaginary$.
+
+The *mod/floor/ceil/fraction* functions are always based on eachother, which makes it a little frustrating to define it using our method. But after playing around with trigonometric functions, I've managed to find out that we only need to define the *modulo* operation, and the rest can be derived from it. Took me a while to figure this out..
 
 Lets define it as: 
 
 $$mod(x, y) = \frac{y\times\cot^{-1}(\cot(\frac{\pi x}{y}))}{\pi}$$
->This function can not be found anywhere on the internet.
+>This function can not be found anywhere on the internet and is very important in our case, because it's the building block for many of the following functions.
 
 Let us define: 
 
-$$truncate(x) = mod(x, 1)$$
+$$ \{x\} = frac(x) = mod(x, 1)$$
 
-So with this, we can define the $\lfloor x \rfloor$ operator.
+> This will give us the faction part.
+
+We can also define $trunc(x)$:
+
+$$trunc(x) = x - sign(x) \cdot mod(|x|, 1)$$
+> $sign(x)$ is defined in the logical expressions section.
+
+So with this, we can define the $\lfloor x \rfloor$ function.
 
 Lets define it as: 
 
-$$\lfloor x \rfloor = x - truncate(x)$$
+$$\lfloor x \rfloor = floor(x) = x - \{x\}$$
 
-We can also define the $\lceil x \rceil$ operator now.
+We can also define the $\lceil x \rceil$ function now.
 
 Lets define it as: 
 
-$$\lceil x \rceil = x + truncate(-x)$$
+$$\lceil x \rceil = ceil(x) = x +  \{-x\}$$
 
 We can also define $round(x)$, both up and down.
 
@@ -79,7 +68,13 @@ Let us define it as:
 
 $$roundDown(x) = \lceil x - 0.5 \rceil$$
 
-We define the $length(x)$ operator, which gives us the integer length of a number.
+We can also define the $isFraction(x)$ function.
+
+Lets define it as:
+
+$$isFraction(x) = \lceil x \rceil - \lfloor x \rfloor$$
+
+We define the $length(x)$ function, which gives us the integer length of a number.
 
 Lets define it as: 
 
@@ -90,9 +85,10 @@ We can define the $digitAt(x, pos) = number_{position}$, which gives us the inte
 
 Lets define it as: 
 
-$$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor \cdot 10^{pos} \rfloor}{10^{pos - 1}} \rfloor = \lfloor \frac{x}{10^{pos - 1}} \rfloor \bmod 10$$
+$$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor \cdot 10^{pos} \rfloor}{10^{pos - 1}} \rfloor$$
 
 > Important, I've seen that $\lfloor \frac{x}{10^{pos - 1}} \rfloor \bmod 10$ doesn't give accurate digits when working with contiguous bit sequences, so I would use my version instead.
+
 
 
 ### Logical expressions
@@ -153,21 +149,21 @@ $$min(a, b) = b\cdot on\left(a\ -\ b\right)\ +\ a\cdot\left(1\ -\ on\left(a\ -\ 
 
 Let's do *Greater than*, *Lesser than* / *or equal*.
 
-Greater than:
-
-$$x \gt a = gt(x, a) = 1-0^{\left|a\ -\ \max\left(x,\ a\right)\right|}$$
-
 Greater than or equal:
 
 $$x \geq a = gte(x, a) = 0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
 
-Lesser than:
-
-$$x < a = lt(x, a) = 1-0^{\left|a\ -\ \min\left(x,\ a\right)\right|}$$
-
 Lesser than or equal:
 
 $$x \leq a = lte(x, a) = 0^{\left|a\ -\ \max\left(x,\ a\right)\right|}$$
+
+Greater than:
+
+$$x \gt a = gt(x, a) = 1-lte(x, a)$$
+
+Lesser than:
+
+$$x < a = lt(x, a) = 1-gte(x, a)$$
 
 ... we can go on and on...
 
@@ -185,23 +181,16 @@ We can do a binary counting function:
 
 $$fromBinaryToDecimal(x)=\sum_{n=0}^{length(x)} on(digitAt(x, n + 1)) \cdot 2^{n}$$
 
-$$fromBinaryToDecimal(1010101)=85$$
+$$fromBinaryToDecimal(1010101) = 85$$
 
-We can do a binary16 to decimal:
+We can do a binary16 (IEEE Standard for Floating-Point Arithmetic) to decimal:
 
-$$Z = 16$$
+$$ fromBinary16ToDecimal(x) = \left(-1\right)^{digitAt\left(x,\ 16\right)} \cdot 2^{(\sum_{n=0}^{4}digitAt\left(x,\ 11\ +\ n\right)\cdot2^{n})-15} \cdot \left(1\ +\ \sum_{n=0}^{9}digitAt\left(x,\ 10\ -\ n\right)\cdot2^{-\left(n\ +\ 1\right)}\right)$$
 
-$$U = 0100001100000000$$
+$$fromBinary16ToDecimal(0100001100000000) = 3.5$$
 
-$$SIGN = \left(-1\right)^{digitAt\left(U,\ Z\right)}$$
+> This is just a proof of concept for turning a binary sequence number only containing 1 and 0 into a decimal number.
 
-$$EXPONENT = \sum_{n=0}^{4}digitAt\left(U,\ 11\ +\ n\right)\cdot2^{n}$$
-
-$$MANTISSA = \sum_{n=0}^{9}digitAt\left(U,\ 10\ -\ n\right)\cdot2^{-\left(n\ +\ 1\right)}$$
-
-$$SIGN\cdot2^{EXPONENT-15}\cdot\left(1\ +\ MANTISSA\right) = 3.5$$
-
-> TODO: Create a function for this.
 
 ### Piecewise functions
 
@@ -217,8 +206,39 @@ Rectangular function can be defined using the logical operations above. But it's
 
 $$rect(x)= \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
 
-
 ----------------------
+
+### Base formulas 
+
+> NOTE: There're certain Analytical continuations for certain functions, but that's not the point of this.
+
+$$ln(x) = 2 \times \sum_{n=0}^{\infty} \frac{1}{2n + 1}(\frac{x - 1}{x + 1})^{2n+1}$$
+
+$$e^{x} = \sum_{n=0}^{\infty} \frac{x^{n}}{n!}$$
+
+$$b^{x} = e^{x \times ln(b)}$$
+
+$$x! = \lim_{N \to \infty} N^x\prod^{N}_{k=1} \frac{k}{k + x}$$
+
+$$sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{(2n + 1)!} x^{2n + 1} = \frac{x}{(\frac{x}{\pi})!(-\frac{x}{\pi})!}$$
+
+$$cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{(2n)!} x^{2n} = sin(x + \frac{\pi}{2})$$
+
+$$\pi cot(\pi x)= \lim_{N \to \infty} \sum_{n=-N}^{N} \frac{1}{x + n}$$
+
+$$tan^{-1}(x)=\sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1} = \int_{0}^{n}\frac{1}{1\ +\ x^{2}}dx$$
+
+$$
+cot^{-1}(x) = \begin{cases} \frac{\pi}{2} - tan^{-1}(x) & \text{if } -1 \leq x \leq 1 \\
+tan^{-1}(\frac\{1}{x}) & \text{if } x \geq 1 \\
+\pi + tan^{-1}(\frac\{1}{x}) & \text{if } x \leq -1 \end{cases} = \frac{\pi}{2} - \int_{0}^{n}\frac{1}{1\ +\ x^{2}}dx 
+$$
+
+$$\int^{\infty}_{0} t^{x-1}e^{-t}dt$$
+
+$$N^x\prod^{\infty}_{k=1} \frac{k}{k + x}$$
+
+etc..
 
 
 ### notes
@@ -231,9 +251,4 @@ TODO: Expand these subject
 
 
 
-$$\int^{\infty}_{0} t^{x-1}e^{-t}dt$$
-
-$$N^x\prod^{\infty}_{k=1} \frac{k}{k + x}$$
-
-etc..
 
