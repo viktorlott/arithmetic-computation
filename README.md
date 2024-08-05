@@ -17,13 +17,13 @@ So the **goal** of this project is to see if it's possible to define mathematica
 
 I'm almost certain that there is literature about this in *Number theory*, *Discrete Mathematics*, *Combinatorics* or *Theoretical Computer Science*, but I'm not sure it has been posed in this way before because I haven't found anything that directly organised it this way.
 
-#### Tools
+#### Toolkit
 So we will be using arithmetic additive and multiplicative operations, powers, roots and logarithms, finite summation and product series notation $\Sigma$ and $\Pi$, and limits $\lim_{x \to a}$ to derive integration and derivation $\int$ and $\frac{d}{dx}$. They need to be expressed algebraically.
 
-##### Elements
+#### Elements
 We use Reals and Complex numbers in decimal base system.
 
-### Quick notes
+#### Quick notes
 Most of these operations and functions work because of infinite series.
 So to make this computable we should define a maximum number length so that we know how to specify the series so that they correctly converges. 
 
@@ -201,7 +201,7 @@ $$fromBinaryToDecimal(1010101) = 85$$
 
 We can do a binary16 (IEEE Standard for Floating-Point Arithmetic) to decimal:
 
-$$ fromBinary16ToDecimal(x) = \left(-1\right)^{digitAt\left(x,\ 16\right)} \cdot 2^{(\sum_{n=0}^{4}digitAt\left(x,\ 11\ +\ n\right)\cdot2^{n})-15} \cdot \left(1\ +\ \sum_{n=0}^{9}digitAt\left(x,\ 10\ -\ n\right)\cdot2^{-\left(n\ +\ 1\right)}\right)$$
+$$ fromBinary16ToDecimal(x) = \left(-1\right)^{digitAt\left(x,\ 16\right)} \cdot 2^{^+\langle digitAt\left(x,\ 11\ +\ n\right)\cdot2^{n} \rangle_{n=0}^{4}-15} \cdot \left(1\ +\ \sum_{n=0}^{9}digitAt\left(x,\ 10\ -\ n\right)\cdot2^{-\left(n\ +\ 1\right)}\right)$$
 
 $$fromBinary16ToDecimal(0100001100000000) = 3.5$$
 
@@ -213,13 +213,19 @@ $$rect(x) = on(x + 0.5) \cdot off(x - 0.5)$$
 $$round(x) = \sum_{k=-\infty}^{\infty}k\ \cdot\ rect\left(x-k\right)$$
 
 $$ precision(x, p) = on(x + p) \cdot off(x - (1 - p)) $$
-> So I have found a precision function that can act as .
 
 $$floor(x) = \sum_{k=-\infty}^{\infty}k\ \cdot\ precision\left(x-k, 0.001\right)$$
 
-$$w(x) = 0^{|x| - x}$$
 
-$$floor(x) = \sum_{k=-\infty}^{\infty}k(w(x) - w(x - 1))$$
+$$w^{x} \equiv 0^{|x| - x}$$
+
+$$floor(x) = \sum_{k=-\infty}^{\infty}k[w^{x - k} - w^{x - k - 1}]$$
+
+This is my own notation for sigma notation.
+
+$^+\langle k[w^{x - k} - w^{x - k - 1}] \rangle _{k\ =\ -\infin}^{\infin}$
+
+$^+\overset{k\ =\ \overset{-}{\infin}\ \to\ \overset{+}{\infin}}{\langle k[w^{x - k} - w^{x - k - 1}] \rangle}$
 
 ### Piecewise functions
 
