@@ -1,31 +1,65 @@
 # Arithmetics ↔ Boolean algebra
 
-The goal with this project is to see if it's possible to define math operations with **Arithmetic operations**, **Algebra rules**, **Series and Sequences**. We often use certain math functions without knowing how they can be derived in the first place.
 
-> I could not find any unified information on this topic anywhere. So much of this "seems" to not have been explored this way. There might be literature about this in *Number theory*, *Discrete Mathematics*, *Combinatorics* or *Theoretical Computer Science*, but I haven't found anything directly.
+We often use certain mathematical functions without knowing how they can be derived mathematically. When looking up definitions for functions, they often either have circular dependencies, meaning that they are implicitly defined, or that they use notation that seems to skip or obfuscate important steps to derive them. An example can be how the piecewise notation can be expressed algebraically (which is important).
+
+Why would this be interesting? Well, it's interesting to me because it answers questions that I've had for a while.
+
+But for most of you, it might be more interesting if we talk about it in the context of neural networks. So I have 3 open questions below that I will try to answer in this project: 
+
+1. If you'd think of creating a neural network that, in simple terms, use additive and multiplicative operations in higher dimensions, wanting it to learn how to algorithmically produce mathematical functions; how would one represent them using, for example, "pure" mathematical notation?
+
+2. We all know about the Universal approximation theorem that states that for any function $f(x)$ there exists a subset of neural networks that can approximate that function. So how could one explicitally express a higher mathematical functions through "pure" addition/subtraction/multiplication/division operations?
+
+3. If we take a look at how computers have implemented these functions, we see that they are defined in ways that exploit the structural representation of numbers, which are integer/floating-point binary sequences. So if we instead start with decimal digit sequences, and only use the tools that I've specified below, how would functions like $max(a, b)$, $a \lt x$, piecewise notation or $a\ mod\ b$ be written such that they stay congruent with their binary counterpart?
+
+So the **goal** of this project is to see if it's possible to define mathematical functions with **Arithmetic operations**, **Algebraic expressions**, and **Finite Series and Sequences**. These things should be derivable given that we can derive boolean algebra.
+
+I'm almost certain that there is literature about this in *Number theory*, *Discrete Mathematics*, *Combinatorics* or *Theoretical Computer Science*, but I'm not sure it has been posed in this way before because I haven't found anything that directly organised it this way.
+
+#### Tools
+So we will be using arithmetic additive and multiplicative operations, powers, roots and logarithms, finite summation and product series notation $\Sigma$ and $\Pi$, and limits $\lim_{x \to a}$ to derive integration and derivation $\int$ and $\frac{d}{dx}$. They need to be expressed algebraically.
+
+##### Elements
+We use Reals and Complex numbers in decimal base system.
 
 ### Quick notes
 Most of these operations and functions work because of infinite series.
 So to make this computable we should define a maximum number length so that we know how to specify the series so that they correctly converges. 
 
-For periodic functions we also would use range reduction. 
-> Ough.. We cannot use range reduction because $reduce\left(x\right)=x\ -\ 2\pi\cdot\lfloor\frac{x}{2\pi}\rfloor, \frac{arccot\left(\cot\left(r\left(x\pi\right)\right)\right)}{\pi}$ are circular defined.
+For periodic functions we also would use range reduction.
 
 *The base formulas are defined at the bottom*.
 
 #### Irreducibility
 When starting to formalise these expressions you sometimes discover cases where some expressions cannot be simplified (reduced) anymore, because then they'd lose their unique property. So those expressions often get their own math notation.
 
-### Fundamental Math Functions
-Let me give you an example. Take the Modulo function. Its definition includes the Absolute- and the Floor function. But how are they defined?
 
-The Absolute function is very simple, we've seen it many times in action. It has this signature, $\sqrt{x^2}$.
+### Important operations
+So I've noticed that there are some operations and functions that are necessary for other things to be derivable. 
 
-Let us define it as: 
+1. The first one is the absolute function. It has two properties (there are more though), idempotence and symmetric. Note that if we have a complex number $|z|$ would be interpreted as $\sqrt{a^2 + b^2}$. But here we say it's $\sqrt{x^2}$, which then would mean that $\sqrt{(-(real + imaginary))^2} = real + imaginary$.
 
 $$|x|=\sqrt{x^2}$$
 
-> Note that if we have a complex number $|z|$ would be interpreted as $\sqrt{a^2 + b^2}$. But here we say it's $\sqrt{x^2}$, which then would mean that $\sqrt{(-(real + imaginary))^2} = real + imaginary$.
+3. The second one uses uses the $0^{0}=1$ interpretation, which is important because it gives rise to $(|x| - x)^{|x|}(|x| - x)^{x}$ and $(|x| + x)^{|x|}(|x| + x)^{-x}$, which simplifies to $0^{|x| + x}$ and $0^{|x| - x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. It's important to note that $0^{0}$ is actually indeterminate, and has different definitions depending on the context. In combinatorics, it is defined as being equal to one, but using limits, one could argue for it being equal to either 1 or 0.
+
+$$(|x| - x)^{|x|}(|x| - x)^{x}=(|x| - x)^{x}(|x| - x)^{|x|}=(|x| - x)^{|x|\ +\ x}=0^{|x|\ +\ x}$$
+
+$$\text{\textit{off}}\ (x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
+1 & \text{if } x \leq   0\end{cases}$$
+
+$$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
+0 & \text{if } x \leq   0\end{cases}$$
+
+ >I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**, but they define it differently.
+ >They are often defined using piecewise notation. The main difference here is that I'm saying that 0 is part of the negative number line and that I have an explicit definition of it.
+
+
+### Circular functions
+I would like to begin by introducing alternative ways to define functions that are implicitly defined, meaning in this case that they have circular dependencies. 
+
+Let me give you an example. Take the Modulo function. Its definition includes the Absolute- and the Floor function. But how are they defined?
 
 The *mod/floor/ceil/fraction* functions are always based on eachother, which makes it a little frustrating to define them using our method. But after playing around with trigonometric functions, I've managed to find out that we only need to define the *modulo* operation, and the rest can be derived from it. Took me a while to figure this out..
 
@@ -34,7 +68,9 @@ Lets define it as:
 $$mod(x, y) = \frac{y\times\cot^{-1}(\cot(\frac{\pi x}{y}))}{\pi}$$
 >This function can not be found anywhere on the internet and is very important in our case, because it's the building block for many of the following functions.
 
-Let us define: 
+>There are alternative ways to define this also. See further down.
+
+We can now define: 
 
 $$ \lbrace x \rbrace = frac(x) = mod(x, 1)$$
 
@@ -91,33 +127,13 @@ $$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor
 
 
 ### Boolean Functions and Logical Operations
-
-We can now move over to more logical operations. Lets start by talking about $0^{x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. It's important to note that $0^{0}$ is actually indeterminate, and has different definitions depending on the context. In combinatorics, it is defined as being equal to one, but using limits, one could argue for it being equal to either 1 or 0.
-
-Now to really formalize this expression such that it's defined for all *x* (making it sound), we can actually define it as: 
-
-$$\text{\textit{off}}\ (x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
-1 & \text{if } x \leq   0\end{cases}$$
-
-$$0^{|x|}0^{x}=0^{x}0^{|x|}=0^{|x|\ +\ x} \ \ \text{Doesn't work}$$
-
-
-$$(|x| - x)^{|x|}(|x| - x)^{x}=(|x| - x)^{x}(|x| - x)^{|x|}=(|x| - x)^{|x|\ +\ x}=0^{|x|\ +\ x} \ \ \text{Works}$$
-
+We can now move over to more logical operations.
 
 We can also define it as this:
 
 $$ \text{\textit{off}}\ (-x) = 0.5 + \frac{|x - mod(x, 1) + 0.5|}{2x - 2 \times mod(x, 1) + 1}$$
 
 >This would actually require $(|x|\ -\ x)^{|x|\ +\ x}$ because *mod* (arccot to be specific) uses piecewise notation.
-
-Next up is $on(x)$, and it is basically just a negation.
-
-$$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
-0 & \text{if } x \leq   0\end{cases}$$
-
->I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**, but they define it differently.
->They are often defined using piecewise notation. The main difference here is that I'm saying that 0 is part of the negative number line and that I have an explicit definition of it.
 
 We can also define the $sign(x)$ function. Its codomain looks like this:
 
