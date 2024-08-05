@@ -52,6 +52,8 @@ $$\text{\textit{off}}\ (x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
 $$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
 0 & \text{if } x \leq   0\end{cases}$$
 
+![](image.png)
+
  >I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**, but they define it differently.
  >They are often defined using piecewise notation. The main difference here is that I'm saying that 0 is part of the negative number line and that I have an explicit definition of it.
 
