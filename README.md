@@ -225,9 +225,9 @@ $$floor(x) = \sum_{k=-\infty}^{\infty}k[w^{x - k} - w^{x - k - 1}]$$
 
 This is my own notation for sigma notation.
 
-$^+\langle k[w^{x - k} - w^{x - k - 1}] \rangle _{k\ =\ -\infin}^{\infin}$
+$^+\langle k[w^{x - k} - w^{x - k - 1}] \rangle _{k\ =\ -\infty}^{\infty}$
 
-$^+\overset{k\ =\ \overset{-}{\infin}\ \to\ \overset{+}{\infin}}{\langle k[w^{x - k} - w^{x - k - 1}] \rangle}$
+$^+\overset{k\ =\ \overset{-}{\infty}\ \to\ \overset{+}{\infty}}{\langle k[w^{x - k} - w^{x - k - 1}] \rangle}$
 
 ### Piecewise functions
 
