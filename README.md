@@ -35,7 +35,7 @@ For periodic functions we also would use range reduction.
 When starting to formalise these expressions you sometimes discover cases where some expressions cannot be simplified (reduced) anymore, because then they'd lose their unique property. So those expressions often get their own math notation.
 
 
-### Important operations
+### Important Operations
 So I've noticed that there are some operations and functions that are necessary for other things to be derivable. 
 
 1. The first one is the absolute function. It has two properties (there are more though), idempotence and symmetric. Note that if we have a complex number $|z|$ would be interpreted as $\sqrt{a^2 + b^2}$. But here we say it's $\sqrt{x^2}$, which then would mean that $\sqrt{(-(real + imaginary))^2} = real + imaginary$.
@@ -58,7 +58,17 @@ $$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
  >They are often defined using piecewise notation. The main difference here is that I'm saying that 0 is part of the negative number line and that I have an explicit definition of it.
 
 
-### Circular functions
+### Real Analysis & Theory of Distributions
+So while writing all of this, I've noticed that in certain cases where I wanted to introduce a new expression for priority *((expression))*, which when evaluated to be zero, any expression multiplied by it would automatically resolve to zero, even if that expression was undefined. It would in a sense act as a *halt* for that evaluation branch. I tried to look up definitions for zero-product rule and null factor law, but they didn't mention anything about this idea directly. So I wrote a little about it, thinking I could define this my self only to discover by accident that these things have already been studied and defined. Apparently, Iverson bracket notation is this idea, which is a generalization of Kronecker delta function. I won't get into it here, but I just found it to be very interesting. 
+
+After digging around I stumbled into Diracs delta function, and it looked so familiar. I read that the function is 0 when $x \neq 0$ but 1 when $x = 0$. Then it said, 
+>Since there is no function having this property, modelling the delta "function" rigorously involves the use of limits or, as is common in mathematics, measure theory and the theory of distributions.
+
+And I thought, isn't this just $0^{\sqrt x^2}$? I know, $0^0$ is indeterminate, but after reading this, should this imply that $0^0 = 1$, can someone explain this to me? Maybe $(|x|+x)^{|x|-x}$ and $(|x|-x)^{|x|+x}$ would be more *true* given that they don't have the issue of $\lim_{x \to \infin} 0^x = 0$. TODO..
+
+Generalized functions and test functions, all of which I never really knew existed, nor claim to understand fully. But I've come to understand a little of what these ideas can be used for, so I have found it quite amusing to first have thought of them my self, and tried to formalise them for this project, only to discover that they have already been formalised. 
+
+### Circular Functions
 I would like to begin by introducing alternative ways to define functions that are implicitly defined, meaning in this case that they have circular dependencies. 
 
 Let me give you an example. Take the Modulo function. Its definition includes the Absolute- and the Floor function. But how are they defined?
