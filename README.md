@@ -11,25 +11,11 @@ But for most of you, it might be more interesting if we talk about it in the con
 
 2. We know about the Universal approximation theorem that states that for any function $f(x)$ there exists a subset of neural networks that can approximate that function. So how could one explicitally express a higher mathematical function through "pure" addition/subtraction/multiplication/division operations?
 
-3. If we take a look at how computers have implemented these functions, we see that they are defined in a closed system where logical gates are combined using to combinational logic circuits that can perform arithmetics on structures that are ordered in certain ways that allows us to represent numbers. The easiest of which are integer binary sequences. So if we instead start with decimal digit sequences, and only use the tools that I've specified below, how would functions like $max(a, b)$, $a \lt x$, piecewise notation or $a\ mod\ b$ be written such that they can be expressed algebraically?
+3. If we take a look at how computers have implemented these functions, we see that they are defined in a closed system where logical gates are combined using to combinational logic circuits that can perform arithmetic calculations on binary sequences. So if we instead start with decimal digit sequences, and only use the tools that I've specified below, how would functions like $max(a, b)$, $a \lt x$, piecewise notation or $a\ mod\ b$ be written such that they can be expressed algebraically?
 
 So the **goal** of this project is to see if it's possible to define mathematical functions with **Arithmetic operations**, **Algebraic expressions**, and **Finite Series and Sequences**.
 
-I'm almost certain that there is literature about this in *Number theory*, *Discrete Mathematics*, *Combinatorics* or *Theoretical Computer Science*, but I'm not sure it has been posed in this way before because I haven't found anything that directly organises it in this way.
-
-#### Irreducible expressions
-When starting to formalise these expressions you sometimes discover cases where some expressions cannot be simplified (reduced) anymore, because then they'd lose their unique property. So those expressions often get their own math notation.
-
-### From Zero-Product Rule to Iverson Brackets
-So while writing all of this, I've noticed that in when formalising these expressions, there are times where we do a lot of unnecessary calculations. In fact, many expressions will evaluate to zero which makes any other expression multiplied by that zero by default. 
-
-I was thinking that we might be able to indicate when an expression is more likely to be zero such that we then can evaluate it first, and then determine if we need to continue down that branch. So I wanted to introduce a new notaion to express this idea *((expression))*, which when evaluated to be zero, any expression multiplied by it would automatically resolve to zero, even if that expression was undefined. It would in a sense act as a *halt* for that evaluation branch. 
-
-I tried to look up definitions for zero-product rule and null factor law, to see if there was any explicit rule for this, but they didn't mention anything about it directly directly, it was just something one could deduce from it. So I wrote a little about it, thinking I could define this myself only to discover by accident that these things have already been studied and defined. 
-
-Apparently, Iverson bracket notation is this idea, which is a generalization of Kronecker delta function. I will get into it what they are further down, but I just found it to be very interesting given that this is what I intended to write about.
-
-Generalized functions and test functions, all of which I never really knew existed, nor claim to understand. But I've come to understand a little of what these ideas can be used for, so I have found it quite amusing to first have thought of them my self, and tried to formalise them for this project, only to later discover that they have already been formalised.
+I'm almost certain that there is literature about this in *Number theory*, *Discrete Mathematics*, *Combinatorics* or *Theoretical Computer Science*, but I'm not sure it has been posed in this way before.
 
 #### Toolkit
 So we will be using arithmetic additive and multiplicative operations, powers, roots and logarithms, finite summation and product series notation $\Sigma$ and $\Pi$, and limits $\lim_{x \to a}$ to derive integration and derivation $\int$ and $\frac{d}{dx}$. They need to be expressed algebraically.
@@ -41,7 +27,7 @@ We use Reals and Complex numbers in decimal base system.
 I would like to begin by introducing alternative ways to define functions that are implicitly defined, meaning in this case that they are circular, e.g. floor is defined by modulo, modulo is defined by floor. That includes *ceil* and *fraction* functions too.
 
 #### Trigonometrical implementation
-We can actually define these function trigonometrically, and we only need to define the *modulo* operation because the rest can be derived from it.
+We can actually define these functions trigonometrically, and we only need to define the *modulo* operation because the rest can be derived from it.
 
 Lets define it as: 
 
@@ -144,6 +130,8 @@ $$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
  > $${\displaystyle \delta [n]= 0^{|n|} ={\begin{cases}1&n=0 \\
 0&n{\text{ is another integer}}\end{cases}}}$$
 
+#### Irreducible expressions
+I want to quickly mention that when starting to formalise these expressions you sometimes discover cases where some expressions cannot be simplified (reduced) anymore, because then they'd lose their unique property. So those expressions often get their own math notation. 
 
 We can also define it as this:
 
@@ -217,10 +205,13 @@ $$ a \leq x \lt b = \lbrack\ a,\ b\ \rparen (x) = gte(x, a) \times lt(x, b) \tim
 #### Arithmetic ALU
 Now we are getting to the fun parts. The title might be weird because I tried to encapsulate the essence of what this section will be about, and that is; how we represent arithmetic operations using arithmetical expressions algebraically. 
 
-**TODO, I have a bunch of desmos equations that I need to test.**
+>**TODO, I have a bunch of desmos equations that I need to test.**
 
-------
+
 #### Binary to decimal representation
+So when we want to show the data, we need to map it into a character set. 
+
+
 We can do a binary counting function:
 $$fromBinaryToDecimal(x)=\sum_{n=0}^{length(x)} on(digitAt(x, n + 1)) \cdot 2^{n}$$
 
@@ -234,6 +225,26 @@ $$fromBinary16ToDecimal(0100001100000000) = 3.5$$
 
 > This is just a proof of concept for turning a binary sequence number only containing 1 and 0 into a decimal number.
 
+#### Piecewise functions
+
+But now we can do Piecewise functions with "pure" math.
+
+$$f(x) = between(x, 0, 4) \times x^{2} + between(x, 3, 6) \times x^{3}$$
+
+
+> TODO, give more examples.
+....
+
+#### Special Fourier series
+
+Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function IIF we have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
+
+$$rect(x) = \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
+
+
+> TODO, give more examples.
+
+#### Left over functions
 
 $$rect(x) = on(x + 0.5) \cdot off(x - 0.5)$$
 
@@ -254,25 +265,17 @@ $^+\langle k[w^{x - k} - w^{x - k - 1}] \rangle _{k\ =\ -\infty}^{\infty}$
 
 $^+\overset{k\ =\ \overset{-}{\infty}\ \to\ \overset{+}{\infty}}{\langle k[w^{x - k} - w^{x - k - 1}] \rangle}$
 
-### Piecewise functions
 
-But now we can do Piecewise functions with "pure" math.
+### From Zero-Product Rule to Iverson Brackets
+So while writing all of this, I've noticed that in when formalising these expressions, there are times where we do a lot of unnecessary calculations. In fact, many expressions will evaluate to zero which makes any other expression multiplied by that zero by default. 
 
-$$f(x) = between(x, 0, 4) \times x^{2} + between(x, 3, 6) \times x^{3}$$
+I was thinking that we might be able to indicate when an expression is more likely to be zero such that we then can evaluate it first, and then determine if we need to continue down that branch. So I wanted to introduce a new notaion to express this idea *((expression))*, which when evaluated to be zero, any expression multiplied by it would automatically resolve to zero, even if that expression was undefined. It would in a sense act as a *halt* for that evaluation branch. 
 
+I tried to look up definitions for zero-product rule and null factor law, to see if there was any explicit rule for this, but they didn't mention anything about it directly directly, it was just something one could deduce from it. So I wrote a little about it, thinking I could define this myself only to discover by accident that these things have already been studied and defined. 
 
-> TODO, give more examples.
-....
+Apparently, Iverson bracket notation is this idea, which is a generalization of Kronecker delta function. I will get into it what they are further down, but I just found it to be very interesting given that this is what I intended to write about.
 
-### Special Fourier series
-
-Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function IIF we have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
-
-$$rect(x) = \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
-
-
-> TODO, give more examples.
-
+Generalized functions and test functions, all of which I never really knew existed, nor claim to understand. But I've come to understand a little of what these ideas can be used for, so I have found it quite amusing to first have thought of them my self, and tried to formalise them for this project, only to later discover that they have already been formalised.
 
 ----------------------
 
