@@ -1,21 +1,35 @@
-# Arithmetics ↔ Boolean algebra
+# Arithmetic computation
+> I think this name captures the essence of this project.
 
-
-We often use certain mathematical functions without knowing how they can be derived mathematically. When looking up definitions for functions, they often either have circular dependencies, meaning that they are implicitly defined, or that they use notation that seems to skip or obfuscate important steps to derive them. An example can be how the piecewise notation can be expressed algebraically (which is important).
+We often use certain mathematical functions without knowing how they can be derived mathematically. When looking up definitions for functions, they often either have circular dependencies, meaning that they are implicitly defined, or that they use notation that seems to skip or obfuscate important steps which one would need to derive them. An example can be how the piecewise notation can be expressed algebraically.
 
 Why would this be interesting? Well, it's interesting to me because it answers questions that I've had for a while.
 
-But for most of you, it might be more interesting if we talk about it in the context of neural networks. So I have 3 open questions below that I will try to answer in this project: 
+But for most of you, it might be more interesting if we talk about it in the context of neural networks. So I have 3 questions below that I will try to answer in this project: 
 
 1. If you'd think of creating a neural network that, in simple terms, use additive and multiplicative operations in higher dimensions, wanting it to learn how to algorithmically produce mathematical functions; how would one represent them using, for example, "pure" mathematical notation?
 
-2. We all know about the Universal approximation theorem that states that for any function $f(x)$ there exists a subset of neural networks that can approximate that function. So how could one explicitally express a higher mathematical functions through "pure" addition/subtraction/multiplication/division operations?
+2. We know about the Universal approximation theorem that states that for any function $f(x)$ there exists a subset of neural networks that can approximate that function. So how could one explicitally express a higher mathematical function through "pure" addition/subtraction/multiplication/division operations?
 
-3. If we take a look at how computers have implemented these functions, we see that they are defined in ways that exploit the structural representation of numbers, which are integer/floating-point binary sequences. So if we instead start with decimal digit sequences, and only use the tools that I've specified below, how would functions like $max(a, b)$, $a \lt x$, piecewise notation or $a\ mod\ b$ be written such that they stay congruent with their binary counterpart?
+3. If we take a look at how computers have implemented these functions, we see that they are defined in a closed system where logical gates are combined using to combinational logic circuits that can perform arithmetics on structures that are ordered in certain ways that allows us to represent numbers. The easiest of which are integer binary sequences. So if we instead start with decimal digit sequences, and only use the tools that I've specified below, how would functions like $max(a, b)$, $a \lt x$, piecewise notation or $a\ mod\ b$ be written such that they can be expressed algebraically?
 
-So the **goal** of this project is to see if it's possible to define mathematical functions with **Arithmetic operations**, **Algebraic expressions**, and **Finite Series and Sequences**. These things should be derivable given that we can derive boolean algebra.
+So the **goal** of this project is to see if it's possible to define mathematical functions with **Arithmetic operations**, **Algebraic expressions**, and **Finite Series and Sequences**.
 
-I'm almost certain that there is literature about this in *Number theory*, *Discrete Mathematics*, *Combinatorics* or *Theoretical Computer Science*, but I'm not sure it has been posed in this way before because I haven't found anything that directly organised it this way.
+I'm almost certain that there is literature about this in *Number theory*, *Discrete Mathematics*, *Combinatorics* or *Theoretical Computer Science*, but I'm not sure it has been posed in this way before because I haven't found anything that directly organises it in this way.
+
+#### Irreducible expressions
+When starting to formalise these expressions you sometimes discover cases where some expressions cannot be simplified (reduced) anymore, because then they'd lose their unique property. So those expressions often get their own math notation.
+
+### From Zero-Product Rule to Iverson Brackets
+So while writing all of this, I've noticed that in when formalising these expressions, there are times where we do a lot of unnecessary calculations. In fact, many expressions will evaluate to zero which makes any other expression multiplied by that zero by default. 
+
+I was thinking that we might be able to indicate when an expression is more likely to be zero such that we then can evaluate it first, and then determine if we need to continue down that branch. So I wanted to introduce a new notaion to express this idea *((expression))*, which when evaluated to be zero, any expression multiplied by it would automatically resolve to zero, even if that expression was undefined. It would in a sense act as a *halt* for that evaluation branch. 
+
+I tried to look up definitions for zero-product rule and null factor law, to see if there was any explicit rule for this, but they didn't mention anything about it directly directly, it was just something one could deduce from it. So I wrote a little about it, thinking I could define this myself only to discover by accident that these things have already been studied and defined. 
+
+Apparently, Iverson bracket notation is this idea, which is a generalization of Kronecker delta function. I will get into it what they are further down, but I just found it to be very interesting given that this is what I intended to write about.
+
+Generalized functions and test functions, all of which I never really knew existed, nor claim to understand. But I've come to understand a little of what these ideas can be used for, so I have found it quite amusing to first have thought of them my self, and tried to formalise them for this project, only to later discover that they have already been formalised.
 
 #### Toolkit
 So we will be using arithmetic additive and multiplicative operations, powers, roots and logarithms, finite summation and product series notation $\Sigma$ and $\Pi$, and limits $\lim_{x \to a}$ to derive integration and derivation $\int$ and $\frac{d}{dx}$. They need to be expressed algebraically.
@@ -23,64 +37,23 @@ So we will be using arithmetic additive and multiplicative operations, powers, r
 #### Elements
 We use Reals and Complex numbers in decimal base system.
 
-#### Quick notes
-Most of these operations and functions work because of infinite series.
-So to make this computable we should define a maximum number length so that we know how to specify the series so that they correctly converges. 
+### Introduction
+I would like to begin by introducing alternative ways to define functions that are implicitly defined, meaning in this case that they are circular, e.g. floor is defined by modulo, modulo is defined by floor. That includes *ceil* and *fraction* functions too.
 
-For periodic functions we also would use range reduction.
-
-*The base formulas are defined at the bottom*.
-
-#### Irreducibility
-When starting to formalise these expressions you sometimes discover cases where some expressions cannot be simplified (reduced) anymore, because then they'd lose their unique property. So those expressions often get their own math notation.
-
-
-### Important Operations
-So I've noticed that there are some operations and functions that are necessary for other things to be derivable. 
-
-1. The first one is the absolute function. It has two properties (there are more though), idempotence and symmetric. Note that if we have a complex number $|z|$ would be interpreted as $\sqrt{a^2 + b^2}$. But here we say it's $\sqrt{x^2}$, which then would mean that $\sqrt{(-(real + imaginary))^2} = real + imaginary$.
-
-$$|x|=\sqrt{x^2}$$
-
-3. The second one uses uses the $0^{0}=1$ interpretation, which is important because it gives rise to $(|x| - x)^{|x|}(|x| - x)^{x}$ and $(|x| + x)^{|x|}(|x| + x)^{-x}$, which simplifies to $0^{|x| + x}$ and $0^{|x| - x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. It's important to note that $0^{0}$ is actually indeterminate, and has different definitions depending on the context. In combinatorics, it is defined as being equal to one, but using limits, one could argue for it being equal to either 1 or 0.
-
-$$(|x| - x)^{|x|}(|x| - x)^{x}=(|x| - x)^{x}(|x| - x)^{|x|}=(|x| - x)^{|x|\ +\ x}=0^{|x|\ +\ x}$$
-
-$$\text{\textit{off}}\ (x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
-1 & \text{if } x \leq   0\end{cases}$$
-
-$$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
-0 & \text{if } x \leq   0\end{cases}$$
-
-![](image.png)
-
- >I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**, but they define it differently.
- >They are often defined using piecewise notation. The main difference here is that I'm saying that 0 is part of the negative number line and that I have an explicit definition of it.
-
-
-### Real Analysis & Theory of Distributions
-So while writing all of this, I've noticed that in certain cases where I wanted to introduce a new expression for priority *((expression))*, which when evaluated to be zero, any expression multiplied by it would automatically resolve to zero, even if that expression was undefined. It would in a sense act as a *halt* for that evaluation branch. I tried to look up definitions for zero-product rule and null factor law, but they didn't mention anything about this idea directly. So I wrote a little about it, thinking I could define this my self only to discover by accident that these things have already been studied and defined. Apparently, Iverson bracket notation is this idea, which is a generalization of Kronecker delta function. I won't get into it here, but I just found it to be very interesting. 
-
-After digging around I stumbled into Diracs delta function, and it looked so familiar. I read that the function is 0 when $x \neq 0$ but 1 when $x = 0$. Then it said, 
->Since there is no function having this property, modelling the delta "function" rigorously involves the use of limits or, as is common in mathematics, measure theory and the theory of distributions.
-
-And I thought, isn't this just $0^{\sqrt x^2}$? I know, $0^0$ is indeterminate, but after reading this, should this imply that $0^0 = 1$, can someone explain this to me? Maybe $(|x|+x)^{|x|-x}$ and $(|x|-x)^{|x|+x}$ would be more *true* given that they don't have the issue of $\lim_{x \to \infin} 0^x = 0$. TODO..
-
-Generalized functions and test functions, all of which I never really knew existed, nor claim to understand fully. But I've come to understand a little of what these ideas can be used for, so I have found it quite amusing to first have thought of them my self, and tried to formalise them for this project, only to discover that they have already been formalised. 
-
-### Circular Functions
-I would like to begin by introducing alternative ways to define functions that are implicitly defined, meaning in this case that they have circular dependencies. 
-
-Let me give you an example. Take the Modulo function. Its definition includes the Absolute- and the Floor function. But how are they defined?
-
-The *mod/floor/ceil/fraction* functions are always based on eachother, which makes it a little frustrating to define them using our method. But after playing around with trigonometric functions, I've managed to find out that we only need to define the *modulo* operation, and the rest can be derived from it. Took me a while to figure this out..
+#### Trigonometrical implementation
+We can actually define these function trigonometrically, and we only need to define the *modulo* operation because the rest can be derived from it.
 
 Lets define it as: 
 
 $$mod(x, y) = \frac{y\times\cot^{-1}(\cot(\frac{\pi x}{y}))}{\pi}$$
->This function can not be found anywhere on the internet and is very important in our case, because it's the building block for many of the following functions.
+> I couldn't find this formula anywhere on the internet. But the gist of it is that it's built on taylor series.
+> I also want to mention that the trigonometric functions are defined at the bottom of the document. 
 
->There are alternative ways to define this also. See further down.
+> Note that these functions are implemented using range reductions, which are very useful when dealing with periodic functions, because they can scale a big number down such that it gives the same result as we would get if we never scaled it down.
+
+> Note that these trigonometric functions are defined with piecewise notation, keep that in mind.
+
+> Note that there are alternative ways to define this function too. See further down.
 
 We can now define: 
 
@@ -121,25 +94,56 @@ Lets define it as:
 
 $$isFraction(x) = \lceil x \rceil - \lfloor x \rfloor$$
 
-We define the $length(x)$ function, which gives us the integer length of a number.
+#### Decimal Extraction Implementation
+So it's kind of hard to choose a good title because now we are moving away from arithmetical operations a bit and moving into the territory of meta arithmetics. I don't know if that is a thing. 
 
-Lets define it as: 
+We first want to define a function that can in a sense check how long a sequence is.
+
+We define the $length(x)$ function, which gives us the integer length of a number:
 
 $$length(x) = \lfloor \log_{10}(|x|) \rfloor + 1$$
-> Note that we need to specify a MAX fraction size if we want to be able to count the number length of fractions/decimals.
 
-We can define the $digitAt(x, pos) = number_{position}$, which gives us the integer number at position.
+> Note that this only works for the integer part of the number, not the fractional part of the number. I also want to add that this function depends on a max integer size also, so even if this function gives us a length, it only gives use the length if it's below the max interger size.
+
+> If building a arithmetic circuit with a max size, we can substitute this function with it.
+
+Now, given the importance of extracting parts from a whole, we will define the $digitAt(x, pos) = number_{position}$, which gives us the integer number at a position.
 
 Lets define it as: 
 
 $$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor \cdot 10^{pos} \rfloor}{10^{pos - 1}} \rfloor$$
 
-> Important, I've seen that $\lfloor \frac{x}{10^{pos - 1}} \rfloor \bmod 10$ doesn't give accurate digits when working with contiguous bit sequences, so I would use my version instead.
+> There are definitions that say that you can use $\lfloor \frac{x}{10^{pos - 1}} \rfloor \bmod 10$. But that one does not give accurate digits when working with contiguous binary sequences, so use my version instead.
 
 
+#### Intermediate arithmetical logic gates
+So I've noticed that there are some operations and functions that are necessary for other things to be derivable. 
 
-### Boolean Functions and Logical Operations
-We can now move over to more logical operations.
+1. The first one is the absolute function. It has two properties (there are more though), idempotence and symmetric. Note that if we have a complex number $|z|$ would be interpreted as $\sqrt{a^2 + b^2}$. But here we say it's $\sqrt{x^2}$, which then would mean that $\sqrt{(-(real + imaginary))^2} = real + imaginary$.
+
+$$|x|=\sqrt{x^2}$$
+
+3. The second one uses uses the $0^{0}=1$ interpretation, which is important because it gives rise to $(|x| - x)^{|x|}(|x| - x)^{x}$ and $(|x| + x)^{|x|}(|x| + x)^{-x}$, which simplifies to $0^{|x| + x}$ and $0^{|x| - x}$. The power rule states that $0^{x > 0} = 0$, and $0^{x = 0} = 1$. It's important to note that $0^{0}$ is actually indeterminate, and has different definitions depending on the context. In combinatorics, it is defined as being equal to one, but using limits, one could argue for it being equal to either 1 or 0.
+
+$$(|x| - x)^{|x|}(|x| - x)^{x}=(|x| - x)^{x}(|x| - x)^{|x|}=(|x| - x)^{|x|\ +\ x}=0^{|x|\ +\ x}$$
+
+$$\text{\textit{off}}\ (x) = 0^{|x|+x} = \begin{cases} 0 & \text{if } x > 0 \\
+1 & \text{if } x \leq   0\end{cases}$$
+
+$$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
+0 & \text{if } x \leq   0\end{cases}$$
+
+![](image.png)
+
+ > I've later discovered that these functions I'm defining here are often called **step function, heaviside function, boxcar function**, but they define it differently.
+
+ > They are often defined using piecewise notation. The main difference here is that I'm saying that 0 is part of the negative number line and that I have an explicit definition of it.
+
+ > So I also want to mention that these are also defined by the Dirac delta function $\delta(t)$.
+
+ > $${\displaystyle \delta [n]= 0^{|n|} ={\begin{cases}1&n=0 \\
+0&n{\text{ is another integer}}\end{cases}}}$$
+
 
 We can also define it as this:
 
@@ -149,10 +153,12 @@ $$ \text{\textit{off}}\ (-x) = 0.5 + \frac{|x - mod(x, 1) + 0.5|}{2x - 2 \times 
 
 We can also define the $sign(x)$ function. Its codomain looks like this:
 
-$$sign(x) = (-1)^{on(-x)} = \frac{x}{|x|} = \begin{cases} +1 & \text{if } x \geq   0 \\
+$$sign(x) = (-1)^{on(-x)}  = \begin{cases} +1 & \text{if } x \geq   0 \\
 -1 & \text{if } x < 0 \end{cases}$$
 > Usually there is a third case here for zero, but I interpret that as being positive instead of just zero.
 
+
+#### Arithmetical logic gates
 So next up is to define the basic $not(x)$, $and(x, y)$, and $or(x, y)$.
 
 Let us define: 
@@ -193,20 +199,29 @@ Lesser than:
 
 $$x < a = lt(x, a) = 1-gte(x, a)$$
 
-... we can go on and on...
+One thing I want to add here but not define it is the Kronecker delta function that can check if two non-negative integers are equal.
+
+$$\delta_{ij}=\delta_{i}^{j}$$
+
+> It can be expressed using the Dirac delta function.
 
 Open interval:
 
-$$between(x, a, b) = a < x < b = 0^{|on(x - a) - on(-x - b)|} = on(x - a) - 0^{|(x - b)| - (x-b)} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
+$$between(x, a, b) = a < x < b = 0^{|on(x - a) - on(-x - b)|} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
 0 & \text{else }\end{cases}$$
 
 Half-open interval:
 
-$$ = \lbrack\ a,\ b\ \rparen (x) = gte(x, a) \times lt(x, b) \times x$$
+$$ a \leq x \lt b = \lbrack\ a,\ b\ \rparen (x) = gte(x, a) \times lt(x, b) \times x$$
 
+#### Arithmetic ALU
+Now we are getting to the fun parts. The title might be weird because I tried to encapsulate the essence of what this section will be about, and that is; how we represent arithmetic operations using arithmetical expressions algebraically. 
 
+**TODO, I have a bunch of desmos equations that I need to test.**
+
+------
+#### Binary to decimal representation
 We can do a binary counting function:
-
 $$fromBinaryToDecimal(x)=\sum_{n=0}^{length(x)} on(digitAt(x, n + 1)) \cdot 2^{n}$$
 
 $$fromBinaryToDecimal(1010101) = 85$$
@@ -245,6 +260,8 @@ But now we can do Piecewise functions with "pure" math.
 
 $$f(x) = between(x, 0, 4) \times x^{2} + between(x, 3, 6) \times x^{3}$$
 
+
+> TODO, give more examples.
 ....
 
 ### Special Fourier series
@@ -253,6 +270,8 @@ Rectangular function can be defined using the logical operations above. But it's
 
 $$rect(x) = \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
 
+
+> TODO, give more examples.
 
 
 ----------------------
@@ -310,9 +329,13 @@ $$
 
 etc..
 
+#### Notes
+Most of these operations and functions work because of infinite series.
+So to make this computable we should define a maximum number length so that we know how to specify the series so that they correctly converges. 
 
-### notes
+For periodic functions we also would use range reduction.
 
+*The base formulas are defined at the bottom*.
 TODO: Expand these subject
 1. Numerical stability
 2. Trigonometry functions
