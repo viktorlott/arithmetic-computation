@@ -97,7 +97,7 @@ Now, given the importance of extracting parts from a whole, we will define the $
 
 Lets define it as: 
 
-$$digitAt(x, pos) = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor \cdot 10^{pos} \rfloor}{10^{pos - 1}} \rfloor$$
+$$digitAt(x, pos) = x_{pos} = \lfloor \frac{\lfloor x - \lfloor \frac{x}{10^{pos}} \rfloor \cdot 10^{pos} \rfloor}{10^{pos - 1}} \rfloor$$
 
 > There are definitions that say that you can use $\lfloor \frac{x}{10^{pos - 1}} \rfloor \bmod 10$. But that one does not give accurate digits when working with contiguous binary sequences, so use my version instead.
 
