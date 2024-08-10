@@ -221,7 +221,7 @@ $$Addition(120, 25) = 145$$
 #### Binary to decimal representation
 So when we want to show the data, we need to map it into a character set. 
 
-$$fromDecimalToBinary(x) = \sum_{n=0}^{\lfloor\log_{2}\left(x\right)\rfloor}10^{n}\operatorname{mod}\left(\lfloor\frac{x}{2^{n}}\rfloor,\ 2\right)$$
+$$fromDecimalToBinary(x) = \sum_{n=0}^{\lfloor\log_{2}\left(x\right)\rfloor}10^{n}mod\left(\lfloor\frac{x}{2^{n}}\rfloor,\ 2\right)$$
 
 $$fromDecimalToBinary(85) = 1010101$$
 
