@@ -125,7 +125,7 @@ $$on(x) = 1 - \text{\textit{off}}\ (x) = \begin{cases} 1 & \text{if } x > 0 \\
 
  > They are often defined using piecewise notation. The main difference here is that I'm saying that 0 is part of the negative number line and that I have an explicit definition of it.
 
- > So I also want to mention that these are also defined by the Dirac delta function $\delta(t)$.
+ > So I also want to mention that these are also defined as a variation of the Dirac delta function.
 
  > $${\displaystyle \delta [n]= 0^{|n|} ={\begin{cases}1&n=0 \\
 0&n{\text{ is another integer}}\end{cases}}}$$
@@ -187,15 +187,17 @@ Lesser than:
 
 $$x < a = lt(x, a) = 1-gte(x, a)$$
 
-One thing I want to add here but not define it is the Kronecker delta function that can check if two non-negative integers are equal.
+Equal to:
 
-$$\delta_{ij}=\delta_{i}^{j}$$
+$$x = a \to gte(x, a) \times lte(x, a) $$
 
-> It can be expressed using the Dirac delta function.
+> This can also be expressed with the Kronecker delta function.
+> $$\delta_{ij}=\delta_{i}^{j} = \begin{cases} 1 & j = i \\ 
+0 & j \neq i\end{cases}$$
 
 Open interval:
 
-$$between(x, a, b) = a < x < b = 0^{|on(x - a) - on(-x - b)|} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
+$$between(x, a, b) = 0^{|on(x - a) - on(-x - b)|} =\begin{cases} 1 & \text{if } a \lt x \lt b \\ 
 0 & \text{else }\end{cases}$$
 
 Half-open interval:
@@ -205,15 +207,27 @@ $$ a \leq x \lt b = \lbrack\ a,\ b\ \rparen (x) = gte(x, a) \times lt(x, b) \tim
 #### Arithmetic ALU
 Now we are getting to the fun parts. The title might be weird because I tried to encapsulate the essence of what this section will be about, and that is; how we represent arithmetic operations using arithmetical expressions algebraically. 
 
->**TODO, I have a bunch of desmos equations that I need to test.**
+$$Add(x, y) = mod(x + y, 10)$$
+
+$$Carry(x, y) = mod(x + y, 1)$$
+
+$$S = max(length(x), length(y))$$
+
+$$Addition(x, y) = \sum_{n=1}^{S}10^{n-1} \cdot Add(x_n, y_n) + Carry(x_{n-1}, y_{n-1})$$
+
+$$Addition(120, 25) = 145$$
 
 
 #### Binary to decimal representation
 So when we want to show the data, we need to map it into a character set. 
 
+$$fromDecimalToBinary(x) = \sum_{n=0}^{\lfloor\log_{2}\left(x\right)\rfloor}10^{n}\operatorname{mod}\left(\lfloor\frac{x}{2^{n}}\rfloor,\ 2\right)$$
+
+$$fromDecimalToBinary(85) = 1010101$$
+
 
 We can do a binary counting function:
-$$fromBinaryToDecimal(x)=\sum_{n=0}^{length(x)} on(digitAt(x, n + 1)) \cdot 2^{n}$$
+$$fromBinaryToDecimal(x)=\sum_{n=0}^{length(x)} 2^{n}\cdot on(digitAt(x, n + 1)) $$
 
 $$fromBinaryToDecimal(1010101) = 85$$
 
@@ -225,11 +239,19 @@ $$fromBinary16ToDecimal(0100001100000000) = 3.5$$
 
 > This is just a proof of concept for turning a binary sequence number only containing 1 and 0 into a decimal number.
 
+$$extractDecimalDigitFromBinary(x, pos) = mod(\lfloor \frac{x}{10^{pos - 1}} \rfloor, 10)$$
+
+$$extractDecimalDigitFromBinary(1010101, 1) = 5$$
+$$extractDecimalDigitFromBinary(1010101, 2) = 8$$
+
+> I know this is not fully binary, but it gives an idea of the process. For example, when we write a program that uses numbers, and then we want to display them in text, the computers needs to first decode each digit from the binary sequence. Such an operation divides up an integer number into decimal parts that are still represented in binary. So a binary number will be split into $\lfloor length(1010101) \cdot \log_{10}2\rfloor = 2$ binary sequences.
+
 #### Piecewise functions
 
 But now we can do Piecewise functions with "pure" math.
 
-$$f(x) = between(x, 0, 4) \times x^{2} + between(x, 3, 6) \times x^{3}$$
+$$between(x, 0, 4) \times x^{2}  = \begin{cases} x^2 & 3 \lt x \lt 6 \\ 
+0 & \text{else }\end{cases}$$
 
 
 > TODO, give more examples.
@@ -239,7 +261,8 @@ $$f(x) = between(x, 0, 4) \times x^{2} + between(x, 3, 6) \times x^{3}$$
 
 Rectangular function can be defined using the logical operations above. But it's also possible to define it using a logistic function IIF we have defined $\frac{x}{0} = \infty$, and $\frac{x}{\infty} = 0$.
 
-$$rect(x) = \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}}$$
+$$rect(x) = \frac{1}{1 + 0^{x + 0.5}} - \frac{1}{1 + 0^{x - 0.5}} = \sum_{|x|}^{0}1$$
+> The summation and product notation are OP, e.g. $\sum_{|x|}^{0}1$
 
 
 > TODO, give more examples.
