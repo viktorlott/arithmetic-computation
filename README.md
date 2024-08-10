@@ -242,6 +242,7 @@ $$fromBinary16ToDecimal(0100001100000000) = 3.5$$
 $$extractDecimalDigitFromBinary(x, pos) = mod(\lfloor \frac{x}{10^{pos - 1}} \rfloor, 10)$$
 
 $$extractDecimalDigitFromBinary(1010101, 1) = 5$$
+
 $$extractDecimalDigitFromBinary(1010101, 2) = 8$$
 
 > I know this is not fully binary, but it gives an idea of the process. For example, when we write a program that uses numbers, and then we want to display them in text, the computers needs to first decode each digit from the binary sequence. Such an operation divides up an integer number into decimal parts that are still represented in binary. So a binary number will be split into $\lfloor length(1010101) \cdot \log_{10}2\rfloor = 2$ binary sequences.
