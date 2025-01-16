@@ -32,6 +32,8 @@ We can actually define these functions trigonometrically, and we only need to de
 Lets define it as: 
 
 $$mod(x, y) = \frac{y\times\cot^{-1}(\cot(\frac{\pi x}{y}))}{\pi}$$
+
+$$mod(x,y)=\sum_{k=-N}^{N}\left(\left(x-ky\right)\cdot o_{n}\left(x-ky\right)\cdot o_{ff}\left(x-\left(k+1\right)y\right)\right)$$
 > I couldn't find this formula anywhere on the internet. But the gist of it is that it's built on taylor series.
 > I also want to mention that the trigonometric functions are defined at the bottom of the document. 
 
